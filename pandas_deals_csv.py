@@ -169,6 +169,10 @@ elif deal_stage.startswith('Lost / Never Ordered'):
     deal_stage = 'Never Ordered'
     probability = '100'
     won = '0'
+elif deal_stage.startswith('Unknown'):
+    deal_stage = 'Never Ordered'
+    probability = '10'
+    won = '0'
 output['Stage Name'] = deal_stage
 output['Probability'] = probability  # str(prob) # in %, 10, 90 ..
 output['Won'] = won # 0 - lost, 1 - won
