@@ -2,6 +2,7 @@
 import pandas as pd
 
 data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals.csv')
+cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
 
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
                'Last Modified Date', 'Owner As Architect  Contractr Address',
@@ -78,25 +79,25 @@ output['Account CRM ID'] = data['Associated Company ID']
 #output['Account Name'] = data['Associated Company']
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
-output['Closed': ''] # 0 or 1
+output['Closed'] = str(0) # 0 or 1
 output['Create Date'] = data['Create Date'] #
 output['Description'] = data['Deal Description'] # Deal Description
 output['Opportunity CRM ID'] = data['Deal ID']
 output['Opportunity Name'] = data['Deal Name']
 # not in the file
 contact_ids = data['Associated Contact IDs']
-#owner_email = self.contacts_data.loc[
-#    self.contacts_data['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
-output['Owner Email Address'] = data['']
+owner_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Owner Email'].values[0]
+output['Owner Email Address'] = owner_email
 output['Primary Contact CRM ID'] = contact_ids[0]
 # not in the file
-# contact_email = self.contacts_data.loc[
-#    self.contacts_data['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
-output['Primary Contact Email Address/Contact CRM ID'] = 'contact_email' # email here
+contact_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
+output['Primary Contact Email Address/Contact CRM ID'] = contact_email # email here
+deal_stage = data['Deal Stage']
+output['Stage Name'] =
 # probability calculated
 # prob = pro(row['Deal Stage']) # function
-output['Probability'] = str(1)  # str(prob) # in %, 10, 90 ...
-output['Stage Name'] = data['Deal Stage']
+output['Probability'] = ''  # str(prob) # in %, 10, 90 ..
+
 won = 1 # wo()  # won or lost
 output['Won'] = data[''] # 0 - lost, 1 - won
 # optional
