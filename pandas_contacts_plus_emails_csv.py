@@ -147,11 +147,11 @@ owner_to_email = {
 output = pd.DataFrame()
 
 # mandatory:
-output['Account Name/Account CRM ID'] = data['Associated Company ID']
+output['Account Name/Account CRM ID'] = data['Account Name/Account CRM ID']
 output['Company Name'] = data['Company Name']
-output['Contact CRM ID'] = data['Contact ID']
-output['Email Address'] = data['Email']
-output['Is Unsubscribed'] = data['Unsubscribed from all email']
+output['Contact CRM ID'] = data['Contact CRM ID']
+output['Email Address'] = data['Email Address']
+output['Is Unsubscribed'] = data['Is Unsubscribed']
 output['First Name'] = data['First Name']
 output['Last Name'] = data['Last Name']
 # optional about the person:
@@ -162,7 +162,7 @@ output['Lead Status'] = data['Lead Status']
 output['Create Date'] = data['Create Date']
 output['Close Date'] = data['Close Date']
 output['Last Modified Date'] = data['Last Modified Date']
-output['Phone'] = data['Phone Number']
+output['Phone'] = data['Phone']
 output['Mobile Phone Number'] = data['Mobile Phone Number']
 output['Time of Last Visit'] = data['Time of Last Visit']
 output['Time of First Visit'] = data['Time of First Visit']
@@ -179,25 +179,19 @@ output['Contact Email'] = data['Contact owner'].map(owner_to_email)
 # output['State/Region'] = data['State/Region']
 # output['Postal Code'] = data['Postal Code']
 # output['Country'] = data['Country']
-output['Website'] = data['Website URL']
+output['Website'] = data['Website']
 output['Email Domain'] = data['Email Domain']
 output['Work email'] = data['Work email']
 # deals
-output['Associated Deals'] = data['Recent Deal Close Date']
+output['Associated Deals'] = data['Associated Deals']
 output['Recent Deal Close Date'] = data['Recent Deal Close Date']
 output['Recent Deal Amount'] = data['Recent Deal Amount']
 output['First Deal Created Date'] = data['First Deal Created Date']
 # money:
 output['Total Revenue'] = data['Total Revenue']
 
-
-
 '''
-output_headers = ['','']
-
-output = pd.DataFrame()
-
 email = contacts_data.loc[contacts_data['Contact CRM ID']==crm_id]['Email Address'].values[0]
 '''
 
-print(output)
+output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/contacts_csv_file_result_plus_emails.csv', index=False)
