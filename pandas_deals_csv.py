@@ -101,6 +101,6 @@ output['Probability'] = ''  # str(prob) # in %, 10, 90 ..
 won = 1 # wo()  # won or lost
 output['Won'] = data[''] # 0 - lost, 1 - won
 # optional
-output['Other Contact CRM IDs'] = data['']
+output['Other Contact CRM IDs'] = data['Associated Contact IDs']
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/deals_csv_file_result.csv', index=False)
