@@ -172,7 +172,7 @@ output['First Conversion Date'] = data['First Conversion Date']
 #owner = row['Contact owner']
 output['Contact owner'] = data['Contact owner']
 # data['animal'] = data['food'].map(str.lower).map(meat_to_animal)
-output['Contact Email'] = data['Contact owner'].map(owner_to_email)
+output['Owner Email'] = data['Contact owner'].map(owner_to_email)
 # about the company:
 # output['Street Address'] = data['Street Address']
 # output['City'] = data['City']
