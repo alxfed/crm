@@ -93,14 +93,84 @@ output['Primary Contact CRM ID'] = contact_ids[0]
 contact_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
 output['Primary Contact Email Address/Contact CRM ID'] = contact_email # email here
 deal_stage = data['Deal Stage']
+if deal_stage.startswith('Received layout - Make quote'):
+    deal_stage = 'Layout received'
+    probability = '30'
+    won = '0'
+elif deal_stage.startswith('Design / Estimate / Revisions'):
+    deal_stage = 'Layout received'
+    probability = '30'
+    won = '0'
+elif deal_stage.startswith('Design / Estimates Completed'):
+    deal_stage = 'Design completed/Quote ready'
+    probability = '50'
+    won = '0'
+elif deal_stage.startswith('Quote Read to be Sent'):
+    deal_stage = 'Design completed/Quote ready'
+    probability = '50'
+    won = '0'
+elif deal_stage.startswith('Quote sent out'):
+    deal_stage = 'Quote sent out - follow up'
+    probability = '30'
+    won = '0'
+elif deal_stage.startswith('Send Out To Measure'):
+    deal_stage = 'Quote sent out - follow up'
+    probability = '30'
+    won = '0'
+elif deal_stage.startswith('To be Checked for Final Approval by Lead Designer'):
+    deal_stage = 'Quote sent out - follow up'
+    probability = '30'
+    won = '0'
+elif deal_stage.startswith('Approved by Lead Designer - Ready For Contract'):
+    deal_stage = 'Final review approved by lead designer'
+    probability = '80'
+    won = '0'
+elif deal_stage.startswith('Client Approved / Contract Send Out'):
+    deal_stage = 'Final review approved by lead designer'
+    probability = '80'
+    won = '0'
+elif deal_stage.startswith('Contract Signed'):
+    deal_stage = 'Final review approved by lead designer'
+    probability = '95'
+    won = '0'
+elif deal_stage.startswith('Deposit Collected'):
+    deal_stage = 'Contract signed/deposit collected'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Deposit Collected'):
+    deal_stage = 'Contract signed/deposit collected'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('In Production'):
+    deal_stage = 'In Production'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Production Finished / Ready For Delivery'):
+    deal_stage = 'In Production'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Balance Collected'):
+    deal_stage = 'Delivery/pickup scheduled'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Delivery'):
+    deal_stage = 'Delivery/pickup scheduled'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Pick Up'):
+    deal_stage = 'Delivery/pickup scheduled'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Closed / Delivered'):
+    deal_stage = 'Won'
+    probability = '100'
+    won = '1'
+elif deal_stage.startswith('Lost / Never Ordered'):
+    deal_stage = 'Never Ordered'
+    probability = '100'
+    won = '0'
 output['Stage Name'] = deal_stage
-# probability calculated
-# prob = pro(row['Deal Stage']) # function
-output['Probability'] = ''  # str(prob) # in %, 10, 90 ..
-
-won = 1 # wo()  # won or lost
-output['Won'] = data[''] # 0 - lost, 1 - won
-# optional
-output['Other Contact CRM IDs'] = data['Associated Contact IDs']
+output['Probability'] = probability  # str(prob) # in %, 10, 90 ..
+output['Won'] = won # 0 - lost, 1 - won
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/deals_csv_file_result.csv', index=False)
