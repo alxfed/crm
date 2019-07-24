@@ -93,7 +93,7 @@ output['Primary Contact CRM ID'] = contact_ids[0]
 contact_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
 output['Primary Contact Email Address/Contact CRM ID'] = contact_email # email here
 deal_stage = data['Deal Stage']
-output['Stage Name'] =
+output['Stage Name'] = deal_stage
 # probability calculated
 # prob = pro(row['Deal Stage']) # function
 output['Probability'] = ''  # str(prob) # in %, 10, 90 ..
