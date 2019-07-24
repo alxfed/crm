@@ -169,16 +169,8 @@ output['Time of First Visit'] = data['Time of First Visit']
 output['Last Activity Date'] = data['Last Activity Date']
 output['First Conversion'] = data['First Conversion']
 output['First Conversion Date'] = data['First Conversion Date']
-#owner = row['Contact owner']
 output['Contact owner'] = data['Contact owner']
-# data['animal'] = data['food'].map(str.lower).map(meat_to_animal)
 output['Owner Email'] = data['Contact owner'].map(owner_to_email)
-# about the company:
-# output['Street Address'] = data['Street Address']
-# output['City'] = data['City']
-# output['State/Region'] = data['State/Region']
-# output['Postal Code'] = data['Postal Code']
-# output['Country'] = data['Country']
 output['Website'] = data['Website']
 output['Email Domain'] = data['Email Domain']
 output['Work email'] = data['Work email']
@@ -189,9 +181,5 @@ output['Recent Deal Amount'] = data['Recent Deal Amount']
 output['First Deal Created Date'] = data['First Deal Created Date']
 # money:
 output['Total Revenue'] = data['Total Revenue']
-
-'''
-email = contacts_data.loc[contacts_data['Contact CRM ID']==crm_id]['Email Address'].values[0]
-'''
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/contacts_csv_file_result_plus_emails.csv', index=False)
