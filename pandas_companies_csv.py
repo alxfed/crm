@@ -28,12 +28,35 @@ input_headers = ['Company ID', 'Last Modified Date', 'Lead Status', 'Total Reven
                'Parent Company', 'Industry', 'Street Address 2', 'Is Public',
                'Associated Company ID', 'Associated Company']
 
-maping = {}
+''' will not be used:
+           'Last Modified Date', 'Lead Status', 
+           'Twitter Followers', 'Company Domain Name',
+           'Last Touch Converting Campaign', 'First Touch Converting Campaign',
+           'Recent Deal Close Date', 'Number of Pageviews', 'Number of Employees',
+           'Time of Last Session', 'Time of First Visit', 'Close Date',
+           'Facebook Fans', 'Associated Deals', 'Recent Deal Amount',
+           'Number of times contacted', 'Original Source Type',
+           'First Deal Created Date', 'Facebook Company Page', 
+           'LinkedIn Bio', 'Number of child companies',
+           'Number of Visits', 'Company owner', 'About Us',
+           'Last Activity Date', 'Next Activity Date', 'Owner Assigned Date',
+           'Email address', 'LinkedIn Company Page',
+           'Total Money Raised', 'Original Source Data 1',
+           'Target Account', 'Original Source Data 2', 'Lifecycle Stage',
+           'Last Contacted', 'HubSpot Team', 'Twitter Bio',
+           'Web Technologies', 'First Contact Create Date',
+           'Type Contractor', 'Time Zone', 'Time Last Seen', 'Time First Seen',
+           'Type', 'Year Founded', 'Twitter Handle',
+           'Google Plus Page', 'Days to Close', 'Annual Revenue',
+           'Parent Company', 'Industry', 'Is Public',
+           'Associated Company ID', 'Associated Company'
+'''
+
+mapping = {}
 
 output_headers = ['','']
 
-data.insert(loc=2, column='column', value=values, allow_duplicates = True)
-
+output = pd.DataFrame()
 
 email = contacts_data.loc[contacts_data['Contact CRM ID']==crm_id]['Email Address'].values[0]
 
