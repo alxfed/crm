@@ -123,8 +123,14 @@ def ExternalEmails(row):
         primary_contact_id = int(contact_ids[0])
     else:
         primary_contact_id = associated_ids
-    contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
-    owner_email   = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'].values[0]
+    if cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]:
+        contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
+    else:
+        contact_email = 'nobody@marfacabinets.com'
+    if cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email']:
+        owner_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'].values[0]
+    else:
+        owner_email = 'nobody@marfacabinets.com'
     return pd.Series([contact_email, owner_email])
 
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
