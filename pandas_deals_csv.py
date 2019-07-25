@@ -5,7 +5,7 @@ data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals.csv')
 cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
 
 
-def DealStage(stage):
+def DealStage(row):
     """
     :type stage: str
     """
@@ -13,6 +13,7 @@ def DealStage(stage):
     deal_won = ''
     deal_closed = ''
     out_stage =''
+    stage = row['Deal Stage']
     if stage.startswith('Received layout - Make quote'):
         out_stage = 'Layout received'
         probability = '30'
@@ -112,18 +113,13 @@ def DealStage(stage):
         probability = '10'
         deal_won = '0'
         deal_closed = '1'
-    return out_stage, probability, deal_won, deal_closed
+    return pd.Series([out_stage, probability, deal_won, deal_closed])
 
 
-def ContactEmail(contactid):
-    contact_email = cont.loc[cont['Contact CRM ID'] == contactid]['Email Address'].values[0]
-    return contact_email
-
-
-def ContactOwnerEmail(contactid):
-    owner_email = cont.loc[cont['Contact CRM ID'] == contactid]['Owner Email'].values[0]
-    return owner_email
-
+def ExternalEmails(row):
+    contact_email = cont.loc[cont['Contact CRM ID'] == row['']]['Email Address'].values[0]
+    owner_email =
+    return pd.Series([contact_email, owner_email])
 
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
                'Last Modified Date', 'Owner As Architect  Contractr Address',
@@ -197,23 +193,20 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
 output = pd.DataFrame()
 # mandatory
 output['Account CRM ID'] = data['Associated Company ID']
-#output['Account Name'] = data['Associated Company']
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
-output['Closed'] = str(0) # 0 or 1
 output['Create Date'] = data['Create Date'] #
 output['Description'] = data['Deal Description'] # Deal Description
 output['Opportunity CRM ID'] = data['Deal ID']
 output['Opportunity Name'] = data['Deal Name']
-# not in the file
-output['Owner Email Address'] = data['Deal Stage'].map(owner_email)
 output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
-# not in the file
-output['Primary Contact Email Address/Contact CRM ID'] = contact_email # email here
-deal_stage = data['Deal Stage']
-#...
-output['Stage Name'] = deal_stage
-output['Probability'] = probability  # str(prob) # in %, 10, 90 ..
+output[['Primary Contact Email Address/Contact CRM ID', 'Owner Email Address']] = data.apply(ExternalEmails, axis=1) # email here
+output[['Stage Name', 'Probability', 'Won', 'Closed']] = data.apply(DealStage, axis=1)
+
+# another mandatory
+output['Closed'] = str(0) # 0 or 1
+# not mandatory
+output[] = probability  # str(prob) # in %, 10, 90 ..
 output['Won'] = won # 0 - lost, 1 - won
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/deals_csv_file_result.csv', index=False)
