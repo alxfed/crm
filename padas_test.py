@@ -1,96 +1,117 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 
-data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals-corrected.csv')
-cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
+#data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals-corrected.csv')
+#cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
 
 
 def DealStage(stage):
+    """
+    :type stage: str
+    """
     probability = ''
     deal_won = ''
     deal_closed = ''
     if stage.startswith('Received layout - Make quote'):
-        stage = 'Layout received'
+        out_stage = 'Layout received'
         probability = '30'
         deal_won = '0'
         deal_closed = '0'
     elif stage.startswith('Design / Estimate / Revisions'):
-        stage = 'Layout received'
+        out_stage = 'Layout received'
         probability = '30'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Design / Estimates Completed'):
-        stage = 'Design completed/Quote ready'
+        out_stage = 'Design completed/Quote ready'
         probability = '50'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Quote Read to be Sent'):
-        stage = 'Design completed/Quote ready'
+        out_stage = 'Design completed/Quote ready'
         probability = '50'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Quote sent out'):
-        stage = 'Quote sent out - follow up'
+        out_stage = 'Quote sent out - follow up'
         probability = '30'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Send Out To Measure'):
-        stage = 'Quote sent out - follow up'
+        out_stage = 'Quote sent out - follow up'
         probability = '30'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('To be Checked for Final Approval by Lead Designer'):
-        stage = 'Quote sent out - follow up'
+        out_stage = 'Quote sent out - follow up'
         probability = '30'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Approved by Lead Designer - Ready For Contract'):
-        stage = 'Final review approved by lead designer'
+        out_stage = 'Final review approved by lead designer'
         probability = '80'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Client Approved / Contract Send Out'):
-        stage = 'Final review approved by lead designer'
+        out_stage = 'Final review approved by lead designer'
         probability = '80'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Contract Signed'):
-        stage = 'Final review approved by lead designer'
+        out_stage = 'Final review approved by lead designer'
         probability = '95'
-        won = '0'
+        deal_won = '0'
     elif stage.startswith('Deposit Collected'):
-        stage = 'Contract signed/deposit collected'
+        out_stage = 'Contract signed/deposit collected'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Deposit Collected'):
-        stage = 'Contract signed/deposit collected'
+        out_stage = 'Contract signed/deposit collected'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('In Production'):
-        stage = 'In Production'
+        out_stage = 'In Production'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Production Finished / Ready For Delivery'):
-        stage = 'In Production'
+        out_stage = 'In Production'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Balance Collected'):
-        stage = 'Delivery/pickup scheduled'
+        out_stage = 'Delivery/pickup scheduled'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Delivery'):
-        stage = 'Delivery/pickup scheduled'
+        out_stage = 'Delivery/pickup scheduled'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Pick Up'):
-        stage = 'Delivery/pickup scheduled'
+        out_stage = 'Delivery/pickup scheduled'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Closed / Delivered'):
-        stage = 'Won'
+        out_stage = 'Won'
         probability = '100'
-        won = '1'
+        deal_won = '1'
+        deal_closed = '0'
     elif stage.startswith('Lost / Never Ordered'):
-        stage = 'Never Ordered'
+        out_stage = 'Never Ordered'
         probability = '100'
-        won = '0'
+        deal_won = '0'
+        deal_closed = '1'
     elif stage.startswith('Unknown'):
-        stage = 'Never Ordered'
+        out_stage = 'Never Ordered'
         probability = '10'
-        won = '0'
-        return stage #, probability, deal_won, deal_closed
+        deal_won = '0'
+        deal_closed = '1'
+    return out_stage, probability, deal_won, deal_closed
 
 
 def ContactEmail(contactid):
@@ -105,6 +126,10 @@ def ContactOwnerEmail(contactid):
 
 output = pd.DataFrame()
 
-output['Deal Stage'] = data['Deal Stage'].map(DealStage)
+ds = DealStage('Design / Estimates Completed')
 
-output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/pandas_test.csv', index=False)
+print('ok')
+
+    # data['Deal Stage'].map(lambda x: DealStage(x))
+
+# output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/pandas_test.csv', index=False)
