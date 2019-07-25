@@ -4,6 +4,105 @@ import pandas as pd
 data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals.csv')
 cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
 
+
+def DealStage(stage):
+    probability = ''
+    deal_won = ''
+    deal_closed = ''
+    if stage.startswith('Received layout - Make quote'):
+        stage = 'Layout received'
+        probability = '30'
+        deal_won = '0'
+        deal_closed = '0'
+    elif stage.startswith('Design / Estimate / Revisions'):
+        stage = 'Layout received'
+        probability = '30'
+        won = '0'
+    elif stage.startswith('Design / Estimates Completed'):
+        stage = 'Design completed/Quote ready'
+        probability = '50'
+        won = '0'
+    elif stage.startswith('Quote Read to be Sent'):
+        stage = 'Design completed/Quote ready'
+        probability = '50'
+        won = '0'
+    elif stage.startswith('Quote sent out'):
+        stage = 'Quote sent out - follow up'
+        probability = '30'
+        won = '0'
+    elif stage.startswith('Send Out To Measure'):
+        stage = 'Quote sent out - follow up'
+        probability = '30'
+        won = '0'
+    elif stage.startswith('To be Checked for Final Approval by Lead Designer'):
+        stage = 'Quote sent out - follow up'
+        probability = '30'
+        won = '0'
+    elif stage.startswith('Approved by Lead Designer - Ready For Contract'):
+        stage = 'Final review approved by lead designer'
+        probability = '80'
+        won = '0'
+    elif stage.startswith('Client Approved / Contract Send Out'):
+        stage = 'Final review approved by lead designer'
+        probability = '80'
+        won = '0'
+    elif stage.startswith('Contract Signed'):
+        stage = 'Final review approved by lead designer'
+        probability = '95'
+        won = '0'
+    elif stage.startswith('Deposit Collected'):
+        stage = 'Contract signed/deposit collected'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Deposit Collected'):
+        stage = 'Contract signed/deposit collected'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('In Production'):
+        stage = 'In Production'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Production Finished / Ready For Delivery'):
+        stage = 'In Production'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Balance Collected'):
+        stage = 'Delivery/pickup scheduled'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Delivery'):
+        stage = 'Delivery/pickup scheduled'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Pick Up'):
+        stage = 'Delivery/pickup scheduled'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Closed / Delivered'):
+        stage = 'Won'
+        probability = '100'
+        won = '1'
+    elif stage.startswith('Lost / Never Ordered'):
+        stage = 'Never Ordered'
+        probability = '100'
+        won = '0'
+    elif stage.startswith('Unknown'):
+        stage = 'Never Ordered'
+        probability = '10'
+        won = '0'
+        return stage, probability, deal_won, deal_closed
+
+
+def ContactEmail(contactid):
+    contact_email = cont.loc[cont['Contact CRM ID'] == contactid]['Email Address'].values[0]
+    return contact_email
+
+
+def ContactOwnerEmail(contactid):
+    owner_email = cont.loc[cont['Contact CRM ID'] == contactid]['Owner Email'].values[0]
+    return owner_email
+
+
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
                'Last Modified Date', 'Owner As Architect  Contractr Address',
                'Owner As General Contractor Address', 'Contractor Ventilation Phone',
@@ -12,7 +111,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
                'Number of times contacted', 'Number of Sales Activities',
                'Contractor Ventilation Address', 'Contractor Plumber Plumbing Name',
                'Original Source Type', 'Contractor Refrigeration Name', 'Create Date',
-               'Contractor General Contractor Address', 'Deal Stage',
+               'Contractor General Contractor Address',
                'Residental Real Estate Dev Name', 'Closed Lost Reason',
                'Tent Contractor Phone', 'Tent Contractor Name', 'Residental Real Estate Dev Phone',
                'Zipcode', 'Design Date', 'Deal owner', 'Last Activity Date', 'Next Activity Date',
@@ -40,7 +139,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
            'Number of times contacted', 'Number of Sales Activities',
            'Contractor Ventilation Address', 'Contractor Plumber Plumbing Name',
            'Original Source Type', 'Contractor Refrigeration Name', 'Create Date',
-           'Contractor General Contractor Address', 'Deal Stage',
+           'Contractor General Contractor Address',
            'Residental Real Estate Dev Name', 'Closed Lost Reason',
            'Tent Contractor Phone', 'Tent Contractor Name', 'Residental Real Estate Dev Phone',
            'Zipcode', 'Design Date', 'Deal owner', 'Last Activity Date', 'Next Activity Date',
@@ -85,94 +184,12 @@ output['Description'] = data['Deal Description'] # Deal Description
 output['Opportunity CRM ID'] = data['Deal ID']
 output['Opportunity Name'] = data['Deal Name']
 # not in the file
-contact_ids = data['Associated Contact IDs']
-owner_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Owner Email'].values[0]
-output['Owner Email Address'] = owner_email
-output['Primary Contact CRM ID'] = contact_ids[0]
+output['Owner Email Address'] = data['Deal Stage'].map(owner_email)
+output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
 # not in the file
-contact_email = cont.loc[cont['Contact CRM ID'] == contact_ids[0]]['Email Address'].values[0]
 output['Primary Contact Email Address/Contact CRM ID'] = contact_email # email here
 deal_stage = data['Deal Stage']
-if deal_stage.startswith('Received layout - Make quote'):
-    deal_stage = 'Layout received'
-    probability = '30'
-    won = '0'
-elif deal_stage.startswith('Design / Estimate / Revisions'):
-    deal_stage = 'Layout received'
-    probability = '30'
-    won = '0'
-elif deal_stage.startswith('Design / Estimates Completed'):
-    deal_stage = 'Design completed/Quote ready'
-    probability = '50'
-    won = '0'
-elif deal_stage.startswith('Quote Read to be Sent'):
-    deal_stage = 'Design completed/Quote ready'
-    probability = '50'
-    won = '0'
-elif deal_stage.startswith('Quote sent out'):
-    deal_stage = 'Quote sent out - follow up'
-    probability = '30'
-    won = '0'
-elif deal_stage.startswith('Send Out To Measure'):
-    deal_stage = 'Quote sent out - follow up'
-    probability = '30'
-    won = '0'
-elif deal_stage.startswith('To be Checked for Final Approval by Lead Designer'):
-    deal_stage = 'Quote sent out - follow up'
-    probability = '30'
-    won = '0'
-elif deal_stage.startswith('Approved by Lead Designer - Ready For Contract'):
-    deal_stage = 'Final review approved by lead designer'
-    probability = '80'
-    won = '0'
-elif deal_stage.startswith('Client Approved / Contract Send Out'):
-    deal_stage = 'Final review approved by lead designer'
-    probability = '80'
-    won = '0'
-elif deal_stage.startswith('Contract Signed'):
-    deal_stage = 'Final review approved by lead designer'
-    probability = '95'
-    won = '0'
-elif deal_stage.startswith('Deposit Collected'):
-    deal_stage = 'Contract signed/deposit collected'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Deposit Collected'):
-    deal_stage = 'Contract signed/deposit collected'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('In Production'):
-    deal_stage = 'In Production'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Production Finished / Ready For Delivery'):
-    deal_stage = 'In Production'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Balance Collected'):
-    deal_stage = 'Delivery/pickup scheduled'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Delivery'):
-    deal_stage = 'Delivery/pickup scheduled'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Pick Up'):
-    deal_stage = 'Delivery/pickup scheduled'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Closed / Delivered'):
-    deal_stage = 'Won'
-    probability = '100'
-    won = '1'
-elif deal_stage.startswith('Lost / Never Ordered'):
-    deal_stage = 'Never Ordered'
-    probability = '100'
-    won = '0'
-elif deal_stage.startswith('Unknown'):
-    deal_stage = 'Never Ordered'
-    probability = '10'
-    won = '0'
+#...
 output['Stage Name'] = deal_stage
 output['Probability'] = probability  # str(prob) # in %, 10, 90 ..
 output['Won'] = won # 0 - lost, 1 - won
