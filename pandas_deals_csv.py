@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 
-data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals-corrected.csv')
+data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals-recorrected.csv')
 cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
 
 
@@ -117,8 +117,12 @@ def DealStage(row):
 
 
 def ExternalEmails(row):
-    contact_ids = row['Associated Contact IDs'].split(', ') # all the IDs in a list
-    primary_contact_id = int(contact_ids[0])
+    associated_ids = row['Associated Contact IDs']
+    if isinstance(associated_ids, str):
+        contact_ids = associated_ids.split(', ') # all the IDs in a list
+        primary_contact_id = int(contact_ids[0])
+    else:
+        primary_contact_id = associated_ids
     contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
     owner_email   = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'].values[0]
     return pd.Series([contact_email, owner_email])
