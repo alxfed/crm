@@ -117,8 +117,8 @@ def DealStage(row):
 
 
 def ExternalEmails(row):
-    contact_email = cont.loc[cont['Contact CRM ID'] == row['']]['Email Address'].values[0]
-    owner_email =
+    contact_email = cont.loc[cont['Contact CRM ID'] == row['Associated Contact IDs'][0]]['Email Address'].values[0]
+    owner_email   = cont.loc[cont['Contact CRM ID'] == row['Associated Contact IDs'][0]]['Owner Email'].values[0]
     return pd.Series([contact_email, owner_email])
 
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
@@ -173,8 +173,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
            'Owner As General Contractor Name', 'Self Cert Architect Name', 'Permit Type',
            'Masonry Contractor Phone', 'Deal Other Name', 'Amount in company currency',
            'Owner As Architect  Contractr Name', 'Expeditor Address', 'Permits Amount',
-           'Owner Occupied Address', 
-           'Associated Contact IDs', 'Associated Contacts'
+           'Owner Occupied Address'
 '''
 
 '''Mandatory
@@ -199,14 +198,15 @@ output['Create Date'] = data['Create Date'] #
 output['Description'] = data['Deal Description'] # Deal Description
 output['Opportunity CRM ID'] = data['Deal ID']
 output['Opportunity Name'] = data['Deal Name']
-output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
-output[['Primary Contact Email Address/Contact CRM ID', 'Owner Email Address']] = data.apply(ExternalEmails, axis=1) # email here
-output[['Stage Name', 'Probability', 'Won', 'Closed']] = data.apply(DealStage, axis=1)
-
-# another mandatory
-output['Closed'] = str(0) # 0 or 1
 # not mandatory
-output[] = probability  # str(prob) # in %, 10, 90 ..
-output['Won'] = won # 0 - lost, 1 - won
+output['Associated Contact IDs'] = data['Associated Contact IDs']
+output['Associated Contacts'] = data['Associated Contacts']
+# mandatory again
+output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
+output[['Primary Contact Email Address/Contact CRM ID',
+        'Owner Email Address']] = data.apply(ExternalEmails, axis=1) # email here
+output[['Stage Name',
+        'Probability',
+        'Won', 'Closed']] = data.apply(DealStage, axis=1)
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/deals_csv_file_result.csv', index=False)
