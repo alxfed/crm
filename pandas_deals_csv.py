@@ -127,7 +127,8 @@ def ExternalEmails(row):
         contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
     else:
         contact_email = 'nobody@marfacabinets.com'
-    if cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email']:
+    owner_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email']
+    if not cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'] == pd.nan:
         owner_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'].values[0]
     else:
         owner_email = 'nobody@marfacabinets.com'
