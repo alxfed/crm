@@ -246,3 +246,12 @@ output[['Stage Name',
         'Won', 'Closed']] = data.apply(DealStage, axis=1)
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/Deals_csv_file_result.csv', index=False)
+
+'''
+These are the fields that are required for your Notes for Accounts. Please ensure that your Notes for Accounts CSV contains these columns.
+
+Account CRM ID
+Create Date
+Note Description
+Owner Email Address
+'''
