@@ -29,6 +29,11 @@ def DealStage(row):
         probability = '30'
         deal_won = '0'
         deal_closed = '0'
+    elif stage.startswith('Send Greg'):
+        out_stage = 'Layout received'
+        probability = '30'
+        deal_won = '0'
+        deal_closed = '0'
     elif stage.startswith('Design / Estimates Completed'):
         out_stage = 'Design completed/Quote ready'
         probability = '50'
