@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 
-data = pd.read_csv('/media/alxfed/toca/aa-crm/old-deals-recorrected.csv')
-cont = pd.read_csv('/media/alxfed/toca/aa-crm/contacts_csv_file_full_result.csv')
+data = pd.read_csv('/media/alxfed/toca/aa-crm/Old-deals-with-ids.csv')
+cont = pd.read_csv('/media/alxfed/toca/aa-crm/Contacts_csv_file.csv')
 
 
 def DealStage(row):
@@ -123,16 +123,28 @@ def ExternalEmails(row):
         primary_contact_id = int(contact_ids[0])
     else:
         primary_contact_id = associated_ids
-    if cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]:
+    if not pd.isnull(cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]):
         contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
     else:
         contact_email = 'nobody@marfacabinets.com'
-    owner_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email']
-    if not cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'] == pd.nan:
-        owner_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Owner Email'].values[0]
+    owner_email = OwnerEmail(row['Deal owner'])
+    return pd.Series([contact_email, owner_email])
+
+
+def OwnerEmail(owner):
+    if owner.startswith('Melissa Conroy'):
+        owner_email = 'mconroy@marfacabinets.com'
+    elif owner.startswith('Douglas Sumner'):
+        owner_email = 'dsumner@marfacabinets.com'
+    elif owner.startswith('Ania Keller'):
+        owner_email = 'imidari@marfacabinets.com'
+    elif owner.startswith('Bjorn Berkmortel'):
+        owner_email = 'bberkmortel@marfacabinets.com'
+    elif owner.startswith('Alexander Doroshko'):
+        owner_email = 'sashadoroshko@marfacabinets.com'
     else:
         owner_email = 'nobody@marfacabinets.com'
-    return pd.Series([contact_email, owner_email])
+    return owner_email
 
 input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
                'Last Modified Date', 'Owner As Architect  Contractr Address',
