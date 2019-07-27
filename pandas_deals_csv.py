@@ -14,12 +14,17 @@ def DealStage(row):
     deal_closed = ''
     out_stage =''
     stage = row['Deal Stage']
-    if stage.startswith('Received layout - Make quote'):
+    if stage.startswith('Received layout'):
         out_stage = 'Layout received'
         probability = '30'
         deal_won = '0'
         deal_closed = '0'
     elif stage.startswith('Design / Estimate / Revisions'):
+        out_stage = 'Layout received'
+        probability = '30'
+        deal_won = '0'
+        deal_closed = '0'
+    elif stage.startswith('Discussed quote/drawings with Client'):
         out_stage = 'Layout received'
         probability = '30'
         deal_won = '0'
@@ -123,12 +128,13 @@ def ExternalEmails(row):
         primary_contact_id = int(contact_ids[0])
     else:
         primary_contact_id = associated_ids
+    print(associated_ids)
     if not pd.isnull(cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]):
         contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
     else:
         contact_email = 'nobody@marfacabinets.com'
     owner_email = OwnerEmail(row['Deal owner'])
-    return pd.Series([contact_email, owner_email])
+    return pd.Series([primary_contact_id, contact_email, owner_email, associated_ids])
 
 
 def OwnerEmail(owner):
@@ -227,11 +233,11 @@ output['Opportunity Name'] = data['Deal Name']
 output['Associated Contact IDs'] = data['Associated Contact IDs']
 output['Associated Contacts'] = data['Associated Contacts']
 # mandatory again
-output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
-output[['Primary Contact Email Address/Contact CRM ID',
-        'Owner Email Address']] = data.apply(ExternalEmails, axis=1) # email here
+# output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
+output[['Primary Contact CRM ID', 'Primary Contact Email Address/Contact CRM ID',
+        'Owner Email Address', 'Associated Contact IDs']] = data.apply(ExternalEmails, axis=1) # email here
 output[['Stage Name',
         'Probability',
         'Won', 'Closed']] = data.apply(DealStage, axis=1)
 
-output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/deals_csv_file_result.csv', index=False)
+output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/Deals_csv_file_result.csv', index=False)
