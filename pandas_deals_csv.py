@@ -112,7 +112,7 @@ def DealStage(row):
         out_stage = 'Won'
         probability = '100'
         deal_won = '1'
-        deal_closed = '0'
+        deal_closed = '1'
     elif stage.startswith('Lost / Never Ordered'):
         out_stage = 'Never Ordered'
         probability = '100'
@@ -227,7 +227,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
 '''
 output = pd.DataFrame()
 # mandatory
-output['Account CRM ID'] = data['Associated Company ID']
+output['Account Name/Account CRM ID'] = data['Associated Company ID']
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
 output['Create Date'] = data['Create Date'] #
