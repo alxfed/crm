@@ -3,6 +3,7 @@ import pandas as pd
 
 data = pd.read_csv('/media/alxfed/toca/aa-crm/Old-deals-with-ids.csv')
 cont = pd.read_csv('/media/alxfed/toca/aa-crm/Contacts_csv_file.csv')
+comp = pd.read_csv('/media/alxfed/toca/aa-crm/uploads/companies_csv_file_result.csv')
 
 
 def DealStage(row):
@@ -141,6 +142,14 @@ def ExternalEmails(row):
     owner_email = OwnerEmail(row['Deal owner'])
     return pd.Series([primary_contact_id, contact_email, owner_email, associated_ids])
 
+def CompanyName(row):
+    company_id = row['Associated Company ID']
+    if company_id:
+        company_name = comp.loc[cont['Account CRM ID'] == company_id]['Account Name'].values[0]
+    else:
+        company_name = 'No associated company'
+    return company_name
+
 
 def OwnerEmail(owner):
     if owner.startswith('Melissa Conroy'):
@@ -227,7 +236,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
 '''
 output = pd.DataFrame()
 # mandatory
-output['Account Name/Account CRM ID'] = data['Associated Company ID']
+output['Account Name/Account CRM ID'] = data.apply(CompanyName, axis=1)
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
 output['Create Date'] = data['Create Date'] #
@@ -245,7 +254,7 @@ output[['Stage Name',
         'Probability',
         'Won', 'Closed']] = data.apply(DealStage, axis=1)
 
-output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/Deals_csv_file_result.csv', index=False)
+output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/Deals_csv_file_result_company_names.csv', index=False)
 
 '''
 These are the fields that are required for your Notes for Accounts. Please ensure that your Notes for Accounts CSV contains these columns.
