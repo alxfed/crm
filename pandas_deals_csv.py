@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+import numpy as np
 
 data = pd.read_csv('/media/alxfed/toca/aa-crm/Old-deals-with-ids.csv')
 cont = pd.read_csv('/media/alxfed/toca/aa-crm/Contacts_csv_file.csv')
@@ -144,10 +145,10 @@ def ExternalEmails(row):
 
 def CompanyName(row):
     company_id = row['Associated Company ID']
-    if company_id:
+    if not pd.isna(company_id):
         company_name = comp.loc[cont['Account CRM ID'] == company_id]['Account Name'].values[0]
     else:
-        company_name = 'No associated company'
+        company_name = 'No company'
     return company_name
 
 
@@ -236,7 +237,7 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
 '''
 output = pd.DataFrame()
 # mandatory
-output['Account Name/Account CRM ID'] = data.apply(CompanyName, axis=1)
+output['Account Name/Account CRM ID'] = data['Associated Company']
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
 output['Create Date'] = data['Create Date'] #
