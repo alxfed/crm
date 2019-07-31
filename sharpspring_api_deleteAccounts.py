@@ -9,9 +9,12 @@ SECRET_KEY = os.environ['SECRET_KEY']
 uu = str(uuid.uuid4())
 data = {
         "method":"deleteAccounts",
-        "objects":[{
-                  "id":'7679305730'
-                }],
+        "params":
+                {"objects":
+                        [
+                                {"id":'7679305730'}
+                        ]
+                },
         "id": uu
         }
 api_access = "https://api.sharpspring.com/pubapi/v1/?accountID={}&secretKey={}".format(ACCOUNT_ID, SECRET_KEY)
