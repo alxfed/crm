@@ -22,4 +22,4 @@ e = r.json()
 res = e['result']
 list_of_accounts = res['account']
 df = pd.DataFrame(list_of_accounts)
-df.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/500company_ids.csv', index=False)
+df.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/500company_ids_plus_plus.csv', index=False)
