@@ -49,38 +49,40 @@ primaryLeadID	        int	            18	            Optional
 # Permit obtained 413160450
 # General Contractor has been contacted 413161474
 
-timest = pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second=0)
+timest = str(pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second=0))
 # alternative ts_input= '...'
 
 opportunity = {
         'id': '',                       # optional
-        'ownerID': '313472547',         # mandatory
-        'dealStageID': '413160450',     # mandatory
-        'accountID': '',                # optional
+        'ownerID': '313472547',                 # mandatory
+        'dealStageID': '413160450',             # mandatory
+        'accountID': '7391925250',                # optional
         'campaignID': '',               # optional
         'opportunityName': 'Test Opportunity',          # mandatory
-        'probability': '',              # optional
-        'amount': '',                   # optional
-        'isClosed': '',                 # optional
-        'isWon': '',                    # optional
-        'isActive': '',                 # optional
+        'probability': '10',              # optional
+        'amount': '10',                   # optional
+        'isClosed': '0',                 # optional
+        'isWon': '0',                    # optional
+        'isActive': '1',                 # optional
         'closeDate': timest,                # mandatory
-        'originatingLeadID': '',        # optional
-        'primaryLeadID': ''             # optional
+        'originatingLeadID': '673342404610',        # optional
+        'primaryLeadID': '673342404610'             # optional
 }
 
 list_of_objects = []
+list_of_objects.append(opportunity)
+
+'''
 for i in range(2, 412):
         list_of_objects.append(opportunity)
+'''
 
-print('ok')
 data = {
         "method":"createOpportunities",
         "params":{"objects": list_of_objects},
         "id": uu
         }
 
-print('ok')
 api_access = "https://api.sharpspring.com/pubapi/v1/?accountID={}&secretKey={}".format(ACCOUNT_ID, SECRET_KEY)
 resp = requests.post(url=api_access, json=data).json()
 what_was_done = resp['result']
