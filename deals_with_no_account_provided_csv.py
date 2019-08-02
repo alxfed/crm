@@ -6,8 +6,8 @@ data = pd.read_csv('/media/alxfed/toca/aa-crm/uploads/Deals.csv')
 
 
 def FillInThaBlanks(row):
-    account_name = row['Account Name/Account CRM ID']
-    if np.isnan(account_name):
+    account_name = str(row['Account Name/Account CRM ID'])
+    if account_name.startswith('nan'):
         account_name = 'No Account Provided'
     return account_name
 
@@ -39,9 +39,9 @@ output['Account Name/Account CRM ID'] = data.apply(FillInThaBlanks, axis=1)
 output['Amount'] = data['Amount']
 output['Close Date'] = data['Close Date']
 output['Create Date'] = data['Create Date'] #
-output['Description'] = data['Deal Description'] # Deal Description
-output['Opportunity CRM ID'] = data['Deal ID']
-output['Opportunity Name'] = data['Deal Name']
+output['Description'] = data['Description'] # Deal Description
+output['Opportunity CRM ID'] = data['Opportunity CRM ID']
+output['Opportunity Name'] = data['Opportunity Name']
 # not mandatory
 output['Associated Contact IDs'] = data['Associated Contact IDs']
 output['Associated Contacts'] = data['Associated Contacts']
