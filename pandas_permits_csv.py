@@ -1,224 +1,105 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
-import numpy as np
-
-permits = pd.read_csv('/media/alxfed/toca/aa-crm/preparation/permits-23-07-2019_13_45_37_Need_to_load.csv')
+import time as tm
 
 
-def DealStage(row):
-    """
-    :type stage: str
-    """
-    probability = ''
-    deal_won = ''
-    deal_closed = ''
-    out_stage =''
-    stage = row['Deal Stage']
-    if stage.startswith('Received layout'):
-        out_stage = 'Layout received'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Design / Estimate / Revisions'):
-        out_stage = 'Layout received'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Discussed quote/drawings with Client'):
-        out_stage = 'Layout received'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Send Greg'):
-        out_stage = 'Layout received'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Design / Estimates Completed'):
-        out_stage = 'Design completed/Quote ready'
-        probability = '50'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Quote Read to be Sent'):
-        out_stage = 'Design completed/Quote ready'
-        probability = '50'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Quote sent out'):
-        out_stage = 'Quote sent out - follow up'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Send Out To Measure'):
-        out_stage = 'Quote sent out - follow up'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('To be Checked for Final Approval by Lead Designer'):
-        out_stage = 'Quote sent out - follow up'
-        probability = '30'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Approved by Lead Designer - Ready For Contract'):
-        out_stage = 'Final review approved by lead designer'
-        probability = '80'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Client Approved / Contract Send Out'):
-        out_stage = 'Final review approved by lead designer'
-        probability = '80'
-        deal_won = '0'
-        deal_closed = '0'
-    elif stage.startswith('Contract Signed'):
-        out_stage = 'Final review approved by lead designer'
-        probability = '95'
-        deal_won = '0'
-    elif stage.startswith('Deposit Collected'):
-        out_stage = 'Contract signed/deposit collected'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Deposit Collected'):
-        out_stage = 'Contract signed/deposit collected'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('In Production'):
-        out_stage = 'In Production'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Production Finished / Ready For Delivery'):
-        out_stage = 'In Production'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Balance Collected'):
-        out_stage = 'Delivery/pickup scheduled'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Delivery'):
-        out_stage = 'Delivery/pickup scheduled'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Pick Up'):
-        out_stage = 'Delivery/pickup scheduled'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '0'
-    elif stage.startswith('Closed / Delivered'):
-        out_stage = 'Won'
-        probability = '100'
-        deal_won = '1'
-        deal_closed = '1'
-    elif stage.startswith('Lost / Never Ordered'):
-        out_stage = 'Never Ordered'
-        probability = '100'
-        deal_won = '0'
-        deal_closed = '1'
-    elif stage.startswith('Unknown'):
-        out_stage = 'Never Ordered'
-        probability = '10'
-        deal_won = '0'
-        deal_closed = '1'
-    return pd.Series([out_stage, probability, deal_won, deal_closed])
+permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-23-07-2019_13_45_37_Need_to_load.csv'
+companies_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-23-07-2019_13_45_37_Need_to_load.csv'
+permits = pd.read_csv(permits_file_path)
+tm.sleep(10)
+companies = pd.read_csv(companies_file_path)
 
-
-def ExternalEmails(row):
-    associated_ids = row['Associated Contact IDs']
-    if isinstance(associated_ids, str):
-        contact_ids = associated_ids.split(', ') # all the IDs in a list
-        primary_contact_id = int(contact_ids[0])
+def TestCompany(row):
+    company = str(row['CONTRACTOR-GENERAL CONTRACTOR Name'])
+    if company.startswith('nan'):
+        company_name = 'No Account Provided'
+        AccountID = 7391925250
     else:
-        primary_contact_id = associated_ids
-    print(associated_ids)
-    if not pd.isnull(cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]):
-        contact_email = cont.loc[cont['Contact CRM ID'] == primary_contact_id]['Email Address'].values[0]
-    else:
-        contact_email = 'nobody@marfacabinets.com'
-    owner_email = OwnerEmail(row['Deal owner'])
-    return pd.Series([primary_contact_id, contact_email, owner_email, associated_ids])
+        company_name = companies.loc[companies['Account Name'] == company]['Account Name'].values[0]
+        AccountID = companies.loc[companies['Account Name'] == company]['AccountID'].values[0]
+    return AccountID, company_name
 
-def CompanyName(row):
-    company_id = row['Associated Company ID']
-    if not pd.isna(company_id):
-        company_name = comp.loc[cont['Account CRM ID'] == company_id]['Account Name'].values[0]
-    else:
-        company_name = 'No company'
-    return company_name
-
-
-def OwnerEmail(owner):
-    if owner.startswith('Melissa Conroy'):
-        owner_email = 'mconroy@marfacabinets.com'
-    elif owner.startswith('Douglas Sumner'):
-        owner_email = 'dsumner@marfacabinets.com'
-    elif owner.startswith('Ania Keller'):
-        owner_email = 'imidari@marfacabinets.com'
-    elif owner.startswith('Bjorn Berkmortel'):
-        owner_email = 'bberkmortel@marfacabinets.com'
-    elif owner.startswith('Alexander Doroshko'):
-        owner_email = 'sashadoroshko@marfacabinets.com'
-    else:
-        owner_email = 'nobody@marfacabinets.com'
-    return owner_email
-
-input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
-               'Last Modified Date', 'Owner As Architect  Contractr Address',
-               'Owner As General Contractor Address', 'Contractor Ventilation Phone',
-               'Self Cert Architect Address', 'Pipeline', 'Masonry Contractor Address',
-               'Permit #', 'Structural Engineer Address', 'Close Date', 'Deal Type',
-               'Number of times contacted', 'Number of Sales Activities',
-               'Contractor Ventilation Address', 'Contractor Plumber Plumbing Name',
-               'Original Source Type', 'Contractor Refrigeration Name', 'Create Date',
-               'Contractor General Contractor Address',
-               'Residental Real Estate Dev Name', 'Closed Lost Reason',
-               'Tent Contractor Phone', 'Tent Contractor Name', 'Residental Real Estate Dev Phone',
-               'Zipcode', 'Design Date', 'Deal owner', 'Last Activity Date', 'Next Activity Date',
-               'Construction Stage', 'Owner Assigned Date', 'Contractor Refrigeration Phone',
-               'Contractor Plumber Plumbing Phone', 'Work Descrption', 'Tent Contractor Address',
-               'Deal Stage', 'Number of Contacts', 'Original Source Data 1',
-               'Original Source Data 2', 'Residental Real Estate Dev Address', 'Issue Date',
-               'Last Contacted', 'HubSpot Team', 'Contractor Refrigeration Address',
-               'Contractor Ventilation Name', 'Deal Name', 'Contractor Plumber Plumbing Address',
-               'Amount', 'Permit Issue Date', 'Structural Engineer Name', 'Expeditor Phone',
-               'Owner Occupied Phone', 'Permit', 'Masonry Contractor Name',
-               'Owner As General Contractor Phone', 'Self Cert Architect Phone', 'Deal Description',
-               'Owner As General Contractor Name', 'Self Cert Architect Name', 'Permit Type',
-               'Masonry Contractor Phone', 'Deal Other Name', 'Amount in company currency',
-               'Owner As Architect  Contractr Name', 'Expeditor Address', 'Permits Amount',
-               'Owner Occupied Address', 'Associated Company ID', 'Associated Company',
-               'Associated Contact IDs', 'Associated Contacts']
-
-''' will not be used:
-        'Closed Won Reason', 'Owner Occupied Name', 'Expeditor Name',
-           'Last Modified Date', 'Owner As Architect  Contractr Address',
-           'Owner As General Contractor Address', 'Contractor Ventilation Phone',
-           'Self Cert Architect Address', 'Pipeline', 'Masonry Contractor Address',
-           'Permit #', 'Structural Engineer Address', 'Deal Type',
-           'Number of times contacted', 'Number of Sales Activities',
-           'Contractor Ventilation Address', 'Contractor Plumber Plumbing Name',
-           'Original Source Type', 'Contractor Refrigeration Name', 'Create Date',
-           'Contractor General Contractor Address',
-           'Residental Real Estate Dev Name', 'Closed Lost Reason',
-           'Tent Contractor Phone', 'Tent Contractor Name', 'Residental Real Estate Dev Phone',
-           'Zipcode', 'Design Date', 'Deal owner', 'Last Activity Date', 'Next Activity Date',
-           'Construction Stage', 'Owner Assigned Date', 'Contractor Refrigeration Phone',
-           'Contractor Plumber Plumbing Phone', 'Work Descrption', 'Tent Contractor Address',
-           'Deal Stage', 'Number of Contacts', 'Original Source Data 1',
-           'Original Source Data 2', 'Residental Real Estate Dev Address', 'Issue Date',
-           'Last Contacted', 'HubSpot Team', 'Contractor Refrigeration Address',
-           'Contractor Ventilation Name', 'Contractor Plumber Plumbing Address',
-           'Permit Issue Date', 'Structural Engineer Name', 'Expeditor Phone',
-           'Owner Occupied Phone', 'Permit', 'Masonry Contractor Name',
-           'Owner As General Contractor Phone', 'Self Cert Architect Phone', 'Deal Description',
-           'Owner As General Contractor Name', 'Self Cert Architect Name', 'Permit Type',
-           'Masonry Contractor Phone', 'Deal Other Name', 'Amount in company currency',
-           'Owner As Architect  Contractr Name', 'Expeditor Address', 'Permits Amount',
-           'Owner Occupied Address'
-'''
+input_headers = ['Permit #', 'Permit Type', ' Permits Amount ',
+                 'Issue Date', 'Work Description', 'Zipcode',
+                 'Address', 'OWNER OCCUPIED Name', 'OWNER OCCUPIED Address',
+                 'OWNER OCCUPIED Phone Mobile', 'OWNER OCCUPIED Phone Voip',
+                 'OWNER OCCUPIED Phone Toll', 'OWNER OCCUPIED Phone Landline',
+                 'OWNER OCCUPIED Phone Undinined', 'ARCHITECT Name',
+                 'ARCHITECT Address', 'ARCHITECT Phone Mobile',
+                 'ARCHITECT Phone Voip', 'ARCHITECT Phone Toll',
+                 'ARCHITECT Phone Landline', 'ARCHITECT Phone Undinined',
+                 'CONTRACTOR-ELECTRICAL Name', 'CONTRACTOR-ELECTRICAL Address',
+                 'CONTRACTOR-ELECTRICAL Phone Mobile',
+                 'CONTRACTOR-ELECTRICAL Phone Voip',
+                 'CONTRACTOR-ELECTRICAL Phone Toll',
+                 'CONTRACTOR-ELECTRICAL Phone Landline',
+                 'CONTRACTOR-ELECTRICAL Phone Undinined',
+                 'CONTRACTOR-GENERAL CONTRACTOR Name',
+                 'CONTRACTOR-GENERAL CONTRACTOR Address',
+                 'CONTRACTOR-GENERAL CONTRACTOR Phone Mobile',
+                 'CONTRACTOR-GENERAL CONTRACTOR Phone Voip',
+                 'CONTRACTOR-GENERAL CONTRACTOR Phone Toll',
+                 'CONTRACTOR-GENERAL CONTRACTOR Phone Landline',
+                 'CONTRACTOR-GENERAL CONTRACTOR Phone Undinined',
+                 'MASONRY CONTRACTOR Name', 'MASONRY CONTRACTOR Address',
+                 'MASONRY CONTRACTOR Phone Mobile', 'MASONRY CONTRACTOR Phone Voip',
+                 'MASONRY CONTRACTOR Phone Toll', 'MASONRY CONTRACTOR Phone Landline',
+                 'MASONRY CONTRACTOR Phone Undinined',
+                 'CONTRACTOR-PLUMBER/PLUMBING Name',
+                 'CONTRACTOR-PLUMBER/PLUMBING Address',
+                 'CONTRACTOR-PLUMBER/PLUMBING Phone Mobile',
+                 'CONTRACTOR-PLUMBER/PLUMBING Phone Voip',
+                 'CONTRACTOR-PLUMBER/PLUMBING Phone Toll',
+                 'CONTRACTOR-PLUMBER/PLUMBING Phone Landline',
+                 'CONTRACTOR-PLUMBER/PLUMBING Phone Undinined',
+                 'CONTRACTOR-REFRIGERATION Name',
+                 'CONTRACTOR-REFRIGERATION Address',
+                 'CONTRACTOR-REFRIGERATION Phone Mobile',
+                 'CONTRACTOR-REFRIGERATION Phone Voip',
+                 'CONTRACTOR-REFRIGERATION Phone Toll',
+                 'CONTRACTOR-REFRIGERATION Phone Landline',
+                 'CONTRACTOR-REFRIGERATION Phone Undinined',
+                 'OWNER Name', 'OWNER Address', 'OWNER Phone Mobile',
+                 'OWNER Phone Voip', 'OWNER Phone Toll',
+                 'OWNER Phone Landline', 'OWNER Phone Undinined',
+                 'EXPEDITOR Name', 'EXPEDITOR Address',
+                 'EXPEDITOR Phone Mobile', 'EXPEDITOR Phone Voip',
+                 'EXPEDITOR Phone Toll', 'EXPEDITOR Phone Landline',
+                 'EXPEDITOR Phone Undinined', 'CONTRACTOR-VENTILATION Name',
+                 'CONTRACTOR-VENTILATION Address',
+                 'CONTRACTOR-VENTILATION Phone Mobile',
+                 'CONTRACTOR-VENTILATION Phone Voip',
+                 'CONTRACTOR-VENTILATION Phone Toll',
+                 'CONTRACTOR-VENTILATION Phone Landline',
+                 'CONTRACTOR-VENTILATION Phone Undinined',
+                 'SELF CERT ARCHITECT Name', 'SELF CERT ARCHITECT Address',
+                 'SELF CERT ARCHITECT Phone Mobile',
+                 'SELF CERT ARCHITECT Phone Voip',
+                 'SELF CERT ARCHITECT Phone Toll',
+                 'SELF CERT ARCHITECT Phone Landline',
+                 'SELF CERT ARCHITECT Phone Undinined',
+                 'STRUCTURAL ENGINEER Name', 'STRUCTURAL ENGINEER Address',
+                 'STRUCTURAL ENGINEER Phone Mobile',
+                 'STRUCTURAL ENGINEER Phone Voip', 'STRUCTURAL ENGINEER Phone Toll',
+                 'STRUCTURAL ENGINEER Phone Landline',
+                 'STRUCTURAL ENGINEER Phone Undinined',
+                 'RESIDENTAL REAL ESTATE DEV Name', 'RESIDENTAL REAL ESTATE DEV Address',
+                 'RESIDENTAL REAL ESTATE DEV Phone Mobile',
+                 'RESIDENTAL REAL ESTATE DEV Phone Voip',
+                 'RESIDENTAL REAL ESTATE DEV Phone Toll',
+                 'RESIDENTAL REAL ESTATE DEV Phone Landline',
+                 'RESIDENTAL REAL ESTATE DEV Phone Undinined',
+                 'OWNER AS GENERAL CONTRACTOR Name',
+                 'OWNER AS GENERAL CONTRACTOR Address',
+                 'OWNER AS GENERAL CONTRACTOR Phone Mobile',
+                 'OWNER AS GENERAL CONTRACTOR Phone Voip',
+                 'OWNER AS GENERAL CONTRACTOR Phone Toll',
+                 'OWNER AS GENERAL CONTRACTOR Phone Landline',
+                 'OWNER AS GENERAL CONTRACTOR Phone Undinined',
+                 'TENT CONTRACTOR Name', 'TENT CONTRACTOR Address',
+                 'TENT CONTRACTOR Phone Mobile', 'TENT CONTRACTOR Phone Voip',
+                 'TENT CONTRACTOR Phone Toll', 'TENT CONTRACTOR Phone Landline',
+                 'TENT CONTRACTOR Phone Undinined']
 
 '''Mandatory
     Account Name/Account CRM ID
@@ -233,25 +114,28 @@ input_headers = ['Deal ID', 'Closed Won Reason', 'Owner Occupied Name', 'Expedit
     Stage Name
     Won
 '''
+
 output = pd.DataFrame()
+
+line = permits.iloc[380]
 # mandatory
-output['Account Name/Account CRM ID'] = data['Associated Company']
-output['Amount'] = data['Amount']
-output['Close Date'] = data['Close Date']
-output['Create Date'] = data['Create Date'] #
-output['Description'] = data['Deal Description'] # Deal Description
-output['Opportunity CRM ID'] = data['Deal ID']
-output['Opportunity Name'] = data['Deal Name']
+output['Account Name/Account CRM ID'] = permits['Associated Company']
+output['Amount'] = permits['Amount']
+output['Close Date'] = permits['Close Date']
+output['Create Date'] = permits['Create Date'] #
+output['Description'] = permits['Deal Description'] # Deal Description
+output['Opportunity CRM ID'] = permits['Deal ID']
+output['Opportunity Name'] = permits['Deal Name']
 # not mandatory
-output['Associated Contact IDs'] = data['Associated Contact IDs']
-output['Associated Contacts'] = data['Associated Contacts']
+output['Associated Contact IDs'] = permits['Associated Contact IDs']
+output['Associated Contacts'] = permits['Associated Contacts']
 # mandatory again
-# output['Primary Contact CRM ID'] = data['Associated Contact IDs'][0]
+# output['Primary Contact CRM ID'] = permits['Associated Contact IDs'][0]
 output[['Primary Contact CRM ID', 'Primary Contact Email Address/Contact CRM ID',
-        'Owner Email Address', 'Associated Contact IDs']] = data.apply(ExternalEmails, axis=1) # email here
+        'Owner Email Address', 'Associated Contact IDs']] = permits.apply(ExternalEmails, axis=1) # email here
 output[['Stage Name',
         'Probability',
-        'Won', 'Closed']] = data.apply(DealStage, axis=1)
+        'Won', 'Closed']] = permits.apply(DealStage, axis=1)
 
 output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/Deals_csv_file_result_company_names.csv', index=False)
 
