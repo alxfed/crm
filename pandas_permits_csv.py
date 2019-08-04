@@ -3,7 +3,7 @@ import pandas as pd
 import time
 
 
-permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-23-07-2019_Need_to_load_with_general_contractors.csv'
+permits_file_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
 companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-03.csv'
 permits = pd.read_csv(permits_file_path)
 time.sleep(3)
@@ -41,8 +41,8 @@ output = pd.DataFrame()
 
 #a = permits.iloc[:, 2]
 
-output['Permit']            = permits['Permit']
-output['Amount']            = permits.iloc[:, 2]
+output['Permit #']          = permits['Permit #']
+output['Permits Amount']    = permits['Permits Amount']
 output['Issue Date']        = permits['Issue Date']
 output['Address']           = permits['Address']
 output[['AccountID', 'OwnerID', 'General Contractor Name']] = permits.apply(TestCompany, axis=1)
