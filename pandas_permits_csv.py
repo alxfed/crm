@@ -4,22 +4,29 @@ import time
 
 
 permits_file_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
-companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-03.csv'
+companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-04.csv'
 permits = pd.read_csv(permits_file_path)
 time.sleep(3)
 companies = pd.read_csv(companies_file_path)
+print('ok')
 
 def TestCompany(row):
-    company = str(row['CONTRACTOR-GENERAL CONTRACTOR Name'])
-    company_name = companies.loc[companies['Account Name'] == company]['Account Name']
-    company_name = company_name.values[0]
-    if company_name:
-        AccountID = companies.loc[companies['Account Name'] == company]['AccountID'].values[0]
-        OwnerID = companies.loc[companies['Account Name'] == company]['OwnerID'].values[0]
-    else:
+    known = False
+    company = row['CONTRACTOR-GENERAL CONTRACTOR Name']
+    companies_list = companies['Account Name']
+    for comp in companies_list:
+        if str(comp).startswith(company):
+            known = True
+            company_name = companies.loc[companies['Account Name'] == company]['Account Name'].values[0]
+            AccountID = companies.loc[companies['Account Name'] == company]['AccountID'].values[0]
+            OwnerID = companies.loc[companies['Account Name'] == company]['OwnerID'].values[0]
+        else:
+            pass
+    if not known:
         AccountID = ''
         OwnerID = 313468425
-    return AccountID, OwnerID, company_name
+        company_name = company
+    return pd.Series([AccountID, OwnerID, company_name])
 
 
 
@@ -41,10 +48,10 @@ output = pd.DataFrame()
 
 #a = permits.iloc[:, 2]
 
-output['Permit #']          = permits['Permit #']
-output['Permits Amount']    = permits['Permits Amount']
-output['Issue Date']        = permits['Issue Date']
-output['Address']           = permits['Address']
+output['Permit']    = permits['Permit #']
+output['Amount']    = permits['Permits Amount']
+output['Issue Date']= permits['Issue Date']
+output['Address']   = permits['Address']
 output[['AccountID', 'OwnerID', 'General Contractor Name']] = permits.apply(TestCompany, axis=1)
 # output['Close Date'] = '2019-12-12 12:06:22'
 output['Permit Type']       = permits['Permit Type']
@@ -65,7 +72,7 @@ output[['Stage Name',
         'Won', 'Closed']] = permits.apply(DealStage, axis=1)
 '''
 
-output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_known_companies.csv', index=False)
+output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result.csv', index=False)
 
 '''
 These are the fields that are required for your Notes for Accounts. Please ensure that your Notes for Accounts CSV contains these columns.
