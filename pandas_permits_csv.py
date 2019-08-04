@@ -20,14 +20,17 @@ def TestCompany(row):
             company_name = companies.loc[companies['Account Name'] == company]['Account Name'].values[0]
             AccountID = companies.loc[companies['Account Name'] == company]['AccountID'].values[0]
             OwnerID = companies.loc[companies['Account Name'] == company]['OwnerID'].values[0]
-        else:
-            pass
+
     if not known:
         AccountID = ''
         OwnerID = 313468425
         company_name = company
     return pd.Series([AccountID, OwnerID, company_name])
 
+def ThirtyPercent(row):
+    amount = 0.3*float(row['Permits Amount'])
+    amount = round(amount)
+    return amount
 
 
 '''Mandatory
@@ -49,13 +52,20 @@ output = pd.DataFrame()
 #a = permits.iloc[:, 2]
 
 output['Permit']    = permits['Permit #']
-output['Amount']    = permits['Permits Amount']
+output['Amount']    = permits.apply(ThirtyPercent, axis=1)
 output['Issue Date']= permits['Issue Date']
 output['Address']   = permits['Address']
 output[['AccountID', 'OwnerID', 'General Contractor Name']] = permits.apply(TestCompany, axis=1)
 # output['Close Date'] = '2019-12-12 12:06:22'
 output['Permit Type']       = permits['Permit Type']
 output['Work Description']  = permits['Work Description']
+
+mask = output['AccountID'] == ''  # rows with no AccountID
+output_unknown_companies = output[mask]
+output_known_companies = output[~mask]
+
+print('ok')
+
 '''
 output['Description'] = permits['Deal Description'] # Deal Description
 output['Opportunity CRM ID'] = permits['Deal ID']
@@ -72,7 +82,8 @@ output[['Stage Name',
         'Won', 'Closed']] = permits.apply(DealStage, axis=1)
 '''
 
-output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result.csv', index=False)
+output_known_companies.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_known_companies.csv', index=False)
+output_unknown_companies.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_unknown_companies.csv', index=False)
 
 '''
 These are the fields that are required for your Notes for Accounts. Please ensure that your Notes for Accounts CSV contains these columns.
