@@ -4,7 +4,7 @@ import time
 
 
 permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-23-07-2019_Need_to_load_with_general_contractors.csv'
-companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-03.csv'
+all_permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-30-07-2019_11_29_21.csv'
 permits = pd.read_csv(permits_file_path)
 time.sleep(3)
 companies = pd.read_csv(companies_file_path)
