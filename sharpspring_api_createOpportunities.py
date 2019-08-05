@@ -12,7 +12,7 @@ import pandas as pd
 ACCOUNT_ID = os.environ['ACCOUNT_ID']
 SECRET_KEY = os.environ['SECRET_KEY']
 uu = str(uuid.uuid4())
-# company_data = pd.read_csv('/media/alxfed/toca/aa-crm/uploads/new_permits.csv')
+permit_data = pd.read_csv('/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_known_companies.csv')
 # ids = company_data['id']
 
 '''Opportunity Object
@@ -51,6 +51,8 @@ primaryLeadID	        int	            18	            Optional
 
 timest = str(pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second=0))
 # alternative ts_input= '...'
+
+for permit in permit_data
 
 opportunity = {
         'id': '',                       # optional
