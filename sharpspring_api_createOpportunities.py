@@ -8,6 +8,7 @@ import uuid
 import pandas as pd
 # import numpy as np
 import time
+import json
 
 
 ACCOUNT_ID = os.environ['ACCOUNT_ID']
@@ -57,37 +58,27 @@ timest = str(pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second
 # alternative ts_input= '...'
 
 permits = permit_data['Permit #']
+list_of_objects = []
 
 for permit in permits:
-    contractor = permit_data.loc(permit_data['Permit #'] == permit)['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0]
-    pass
-    '''
-        company = companies_data.loc(companies_data['Account Name'] == permit)
-        accountID =
-        amount =
-        opportunityName =
-        opportunity = {
-                        'ownerID': '313468425',                 # mandatory
-                        'dealStageID': '413160450',             # mandatory
-                        'accountID': accountID,                # optional
-                        'opportunityName': opportunityName,          # mandatory
-                        'probability': '10',              # optional
-                        'amount': amount,                   # optional
-                        'isClosed': '0',                 # optional
-                        'isWon': '0',                    # optional
-                        'isActive': '1',                 # optional
-                        'closeDate': timest                # mandatory
-                        }
-                '''
-
-
-list_of_objects = []
-list_of_objects.append(opportunity)
-
-'''
-for i in range(2, 412):
-        list_of_objects.append(opportunity)
-'''
+    row = permit_data[permit_data['Permit #'] == permit]
+    company_name = row['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0]
+    accountID = str(companies_data[companies_data['Account Name'] == company_name]['AccountID'].values[0])
+    amount = str(.3*row['Permits Amount'].values[0])
+    opportunityName = row['Address'].values[0]
+    opportunity = {
+                    'ownerID': '313468425',                 # mandatory
+                    'dealStageID': '413160450',             # mandatory
+                    'accountID': accountID,                # optional
+                    'opportunityName': opportunityName,          # mandatory
+                    'probability': '10',              # optional
+                    'amount': amount,                   # optional
+                    'isClosed': '0',                 # optional
+                    'isWon': '0',                    # optional
+                    'isActive': '1',                 # optional
+                    'closeDate': timest                # mandatory
+                    }
+    list_of_objects.append(opportunity)
 
 data = {
         "method":"createOpportunities",
@@ -95,8 +86,9 @@ data = {
         "id": uu
         }
 
+data_json = json.dumps(data)
 api_access = "https://api.sharpspring.com/pubapi/v1/?accountID={}&secretKey={}".format(ACCOUNT_ID, SECRET_KEY)
-resp = requests.post(url=api_access, json=data).json()
+resp = requests.post(url=api_access, json=data_json).json()
 what_was_done = resp['result']
 there_was_an_error = resp['error']
 
