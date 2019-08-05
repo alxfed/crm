@@ -3,8 +3,9 @@ import pandas as pd
 import time
 
 
+print('ok')
 permits_file_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
-companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-04.csv'
+companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-05.csv'
 permits = pd.read_csv(permits_file_path)
 time.sleep(3)
 companies = pd.read_csv(companies_file_path)
