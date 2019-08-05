@@ -56,9 +56,12 @@ primaryLeadID	        int	            18	            Optional
 timest = str(pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second=0))
 # alternative ts_input= '...'
 
+permits = permit_data['Permit #']
 
-
-for permit in permit_data:
+for permit in permits:
+    contractor = permit_data.loc(permit_data['Permit #'] == permit)['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0]
+    pass
+    '''
         company = companies_data.loc(companies_data['Account Name'] == permit)
         accountID =
         amount =
@@ -75,6 +78,8 @@ for permit in permit_data:
                         'isActive': '1',                 # optional
                         'closeDate': timest                # mandatory
                         }
+                '''
+
 
 list_of_objects = []
 list_of_objects.append(opportunity)
