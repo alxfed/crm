@@ -7,13 +7,17 @@ import os
 import uuid
 import pandas as pd
 # import numpy as np
+import time
 
 
 ACCOUNT_ID = os.environ['ACCOUNT_ID']
 SECRET_KEY = os.environ['SECRET_KEY']
 uu = str(uuid.uuid4())
-permit_data = pd.read_csv('/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_known_companies.csv')
+companies_file_path = '/media/alxfed/toca/aa-crm/preparation/accounts-export-0000-00-00-2019-08-05.csv'
+permit_data = pd.read_csv('/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv')
 # ids = company_data['id']
+time.sleep(3)
+companies_data = pd.read_csv(companies_file_path)
 
 '''Opportunity Object
 Name	                Type	        Length	        Is Required
@@ -52,24 +56,25 @@ primaryLeadID	        int	            18	            Optional
 timest = str(pd.Timestamp(year=2019, month=12, day=4, hour=12, minute=12, second=0))
 # alternative ts_input= '...'
 
-for permit in permit_data
 
-opportunity = {
-        'id': '',                       # optional
-        'ownerID': '313472547',                 # mandatory
-        'dealStageID': '413160450',             # mandatory
-        'accountID': '7391925250',                # optional
-        'campaignID': '',               # optional
-        'opportunityName': 'Test Opportunity',          # mandatory
-        'probability': '10',              # optional
-        'amount': '10',                   # optional
-        'isClosed': '0',                 # optional
-        'isWon': '0',                    # optional
-        'isActive': '1',                 # optional
-        'closeDate': timest,                # mandatory
-        'originatingLeadID': '673342404610',        # optional
-        'primaryLeadID': '673342404610'             # optional
-}
+
+for permit in permit_data:
+        company = companies_data.loc(companies_data['Account Name'] == permit)
+        accountID =
+        amount =
+        opportunityName =
+        opportunity = {
+                        'ownerID': '313468425',                 # mandatory
+                        'dealStageID': '413160450',             # mandatory
+                        'accountID': accountID,                # optional
+                        'opportunityName': opportunityName,          # mandatory
+                        'probability': '10',              # optional
+                        'amount': amount,                   # optional
+                        'isClosed': '0',                 # optional
+                        'isWon': '0',                    # optional
+                        'isActive': '1',                 # optional
+                        'closeDate': timest                # mandatory
+                        }
 
 list_of_objects = []
 list_of_objects.append(opportunity)

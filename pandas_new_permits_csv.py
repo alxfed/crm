@@ -4,7 +4,7 @@ import numpy as np
 
 data = pd.read_csv('/home/alxfed/Downloads/permits-23-07-2019_13_45_37_Need_to_load.csv')
 cont = pd.read_csv('/home/alxfed/Downloads/Leads2019_08_01.csv')
-comp = pd.read_csv('/home/alxfed/Downloads/accounts-export-0000-00-00-2019-08-01.csv')
+comp = pd.read_csv('/home/alxfed/Downloads/accounts-export-0000-00-00-2019-08-05.csv')
 
 
 def DealStage(row):
