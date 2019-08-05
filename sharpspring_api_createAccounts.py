@@ -4,10 +4,13 @@ import uuid
 import pandas as pd
 import numpy as np
 import time
+import json
 
 
 accounts_data_path = '/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_unknown_companies.csv'
-all_permits_data_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
+#all_permits_data_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load.csv'
+permits_file_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
+# new_companies_file_path = '/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_unknown_companies.csv'
 
 ACCOUNT_ID = os.environ['ACCOUNT_ID']
 SECRET_KEY = os.environ['SECRET_KEY']
@@ -15,7 +18,7 @@ uu = str(uuid.uuid4())
 
 new_accounts = pd.read_csv(accounts_data_path)
 time.sleep(3)
-all_permits = pd.read_csv(all_permits_data_path)
+all_permits = pd.read_csv(permits_file_path)
 list_of_objects = []
 
 '''
@@ -43,34 +46,42 @@ shippingStreetAddress	varchar	        255	            Optional
 '''
 
 permits = new_accounts['Permit']
+pool = set()
 for permit in permits:
         data = all_permits[all_permits['Permit #'] == permit]
-        list_of_objects.append(
-                {'ownerID': '313468425',
-                 'accountName': data['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0],
-                 'phone': data['']
-                 }
-        )
+        co = str(data['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0])
+        if co not in pool:
+            pool.add(co)
+            if not pd.isna(data['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0]):
+                Phone = data['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0]
+            else:
+                Phone = ''
+            if not pd.isna(data['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile'].values[0]):
+                Mobile_Phone = data['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile'].values[0]
+            else:
+                Mobile_Phone = ''
+            list_of_objects.append(
+                    {'ownerID': '313468425',
+                     'accountName': data['CONTRACTOR-GENERAL CONTRACTOR Name'].values[0],
+                     'billingStreetAddress': data['CONTRACTOR-GENERAL CONTRACTOR Address'].values[0],
+                     'phone': Phone,
+                     'mobilePhoneNumber': Mobile_Phone,
+                     })
 
-print('ok')
-
-'''
-list_of_objects = []
-for i in range(2, 412):
-        list_of_objects.append({'id': str(ids[i])})
-
-print('ok')
 data = {
-        "method":"deleteAccounts",
-        "params":{"objects": list_of_objects},
-        "id": uu
+        "method":"createAccounts",
+        "params":
+            {"objects": list_of_objects
+             },
+        "id":uu
         }
 
 print('ok')
+data_json = json.dumps(data)
 api_access = "https://api.sharpspring.com/pubapi/v1/?accountID={}&secretKey={}".format(ACCOUNT_ID, SECRET_KEY)
-r = requests.post(url=api_access, json=data)
+r = requests.post(url=api_access, json=data_json)
 
 e = r.json()
 #res = e['result']
-'''
+
 print('ok')
