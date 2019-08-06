@@ -32,8 +32,11 @@ def RequestAccounts(**kwargs):
         json_data = json.dumps(data)
         response = requests.post(url=api_access, json=json_data)
 
-        dict_of_account_parameters = response.json()['result']['account'][0]  # the first company out of 500
-        keys = list(dict_of_account_parameters.keys())
+        result  = response.json()['result']
+        error   = response.json()['error']
+        id      = response.json()['id']         # the first company out of 500
+
+        keys = list(result['account'][0].keys())
         for key in keys:
                 print(key, dict_of_account_parameters[key])
         account_data = 0
