@@ -13,9 +13,11 @@ def RequestAccounts(**kwargs):
         id      = kwargs.get('id', None)
         ownerID = kwargs.get('ownerID', None)
         if id or ownerID:
-                where = {}
-                if id:
-                        where.append('"where": {"id": str(id)}')
+            where = {}
+            if id:
+                where.update('"where": {"id": {}}'.format(str(id)))
+            else:
+                where.update('"where": {"ownerID": {}}'.format(str(ownerID)))
 
         api_access = "https://api.sharpspring.com/pubapi/v1/?accountID={}&secretKey={}".format(ACCOUNT_ID, SECRET_KEY)
         uid = str(uuid.uuid4())
@@ -38,7 +40,7 @@ def RequestAccounts(**kwargs):
 
         keys = list(result['account'][0].keys())
         for key in keys:
-                print(key, dict_of_account_parameters[key])
+                print(key, result['account'][0][key])
         account_data = 0
         return account_data
 
