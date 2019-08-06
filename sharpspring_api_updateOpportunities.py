@@ -9,6 +9,7 @@ import pandas as pd
 # import numpy as np
 import time
 import json
+import numpy as np
 
 
 ACCOUNT_ID = os.environ['ACCOUNT_ID']
@@ -71,18 +72,36 @@ list_of_objects = []
 for opp in opportunities:
     perm_row = permit_data[permit_data['Address'] == opp]
     opp_row = opportunities_data[opportunities_data['Opp Name'] == opp]
+    phone_mobile = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile'].values[0]
+    if phone_mobile == np.nan:
+        phone_mobile = ''
+    phone_landline = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0]
+    if phone_landline == np.nan:
+        phone_landline = ''
+    phone_voip = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Voip'].values[0]
+    if phone_voip == np.nan:
+        phone_voip = ''
+    phone_toll = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Toll'].values[0]
+    if phone_toll == np.nan:
+        phone_toll = ''
     architect_name = perm_row['ARCHITECT Name'].values[0]
-    architect_phone = perm_row['ARCHITECT Name'].values[0]
-
+    if architect_name == np.nan:
+        architect_name = ''
+    architect_phone = perm_row['ARCHITECT Phone Landline'].values[0]
+    if architect_phone == np.nan:
+        architect_phone = ''
+    phone_unindentified = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Undinined'].values[0]
+    if phone_unindentified == np.nan:
+        phone_unindentified = ''
     opportunity = {
                     "id": str(opp_row['Opp ID'].values[0]),
-                    "phone_mobile_5d49b26077fb6": perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0]
-                    "phone_landline_5d49b279dfb3e": perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0],
-                    "phone_voip_5d49b28d269bf": perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Voip'].values[0],
-                    "phone_toll_5d49b30db0bce": perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Toll'].values[0],
-                    "architect_name_5d49b4819ce8b": perm_row['ARCHITECT Name'].values[0],
-                    "architect_phone_5d49b4e31d915": perm_row['ARCHITECT Phone Landline'].values[0],
-                    "phone_unidentified_5d49b5bc86977": perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Undinined'].values[0]
+                    "phone_mobile_5d49b26077fb6": phone_mobile,
+                    "phone_landline_5d49b279dfb3e": phone_landline,
+                    "phone_voip_5d49b28d269bf": phone_voip,
+                    "phone_toll_5d49b30db0bce": phone_toll,
+                    "architect_name_5d49b4819ce8b": architect_name,
+                    "architect_phone_5d49b4e31d915": architect_phone,
+                    "phone_unidentified_5d49b5bc86977": phone_unindentified
                     }
     list_of_objects.append(opportunity)
 
