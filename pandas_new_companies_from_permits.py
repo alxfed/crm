@@ -67,6 +67,7 @@ Lead Status # 'New'
 output[['Name',
         'Street Address',
         'Company Owner',
+        'Lead Status',
         'Phone Landline',
         'Phone Mobile',
         'Phone Toll',
