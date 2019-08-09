@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
 import time
+import usaddress
 
 
 permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-09-08-2019_10_54_27.csv'
@@ -13,25 +14,37 @@ print('ok')
 
 def TestCompany(row):
     known = False
+    name = ''
+    street_address = ''
+    company_owner = ''
+    lead_status = ''
+    phone_landline = ''
+    phone_voip = ''
+    phone_mobile = ''
+    phone_toll = ''
+    phone_unidentified = ''
     company = row['CONTRACTOR-GENERAL CONTRACTOR Name']
-    companies_list = companies['Account Name']
+    companies_list = companies['Name']
     for comp in companies_list:
         if str(comp).startswith(company):
             known = True
-            company_name = companies.loc[companies['Account Name'] == company]['Account Name'].values[0]
-            AccountID = companies.loc[companies['Account Name'] == company]['AccountID'].values[0]
-            OwnerID = companies.loc[companies['Account Name'] == company]['OwnerID'].values[0]
+            pass
 
     if not known:
-        AccountID = ''
-        OwnerID = 313468425
-        company_name = company
-    return pd.Series([AccountID, OwnerID, company_name])
-
-def ThirtyPercent(row):
-    amount = 0.3*float(row['Permits Amount'])
-    amount = round(amount)
-    return amount
+        name = company
+        street_address = row['CONTRACTOR-GENERAL CONTRACTOR Address']
+        company_owner = 'sashadoroshko@marfacabinets.com'
+        lead_status = 'New'
+        phone_landline = row['CONTRACTOR-GENERAL CONTRACTOR Phone Landline']
+        phone_mobile = row['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile']
+        phone_voip = row['CONTRACTOR-GENERAL CONTRACTOR Phone Voip']
+        phone_toll = row['CONTRACTOR-GENERAL CONTRACTOR Phone Toll']
+        phone_unidentified = row['CONTRACTOR-GENERAL CONTRACTOR Phone Undinined']
+    return pd.Series([name, street_address,
+                      company_owner, lead_status,
+                      phone_landline, phone_voip,
+                      phone_mobile, phone_toll,
+                      phone_unidentified])
 
 
 output = pd.DataFrame()
@@ -51,26 +64,15 @@ Email address
 Lead Status # 'New'
 '''
 
-output['Name']    = permits['CONTRACTOR-GENERAL CONTRACTOR Name']
-#output['Company Domain']    = permits['CONTRACTOR-GENERAL CONTRACTOR Name']
-output['Street Address'] = permits['CONTRACTOR-GENERAL CONTRACTOR Address']
-output['Phone Landline']    = permits['CONTRACTOR-GENERAL CONTRACTOR Phone Landline']
-output['Phone Mobile']    = permits['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile']
-output['Phone Toll']    = permits['CONTRACTOR-GENERAL CONTRACTOR Phone Toll']
-output['Phone Unidentified']    = permits['CONTRACTOR-GENERAL CONTRACTOR Phone Undinined']
-output['Phone VoIP']    = permits['CONTRACTOR-GENERAL CONTRACTOR Phone Voip']
+output[['Name',
+        'Street Address',
+        'Company Owner',
+        'Phone Landline',
+        'Phone Mobile',
+        'Phone Toll',
+        'Phone Unidentified',
+        'Phone VoIP']] = permits.apply(TestCompany, axis=1)
 
-output['Amount']    = permits.apply(ThirtyPercent, axis=1)
-output['Issue Date']= permits['Issue Date']
-output['Address']   = permits['Address']
-output[['AccountID', 'OwnerID', 'General Contractor Name']] = permits.apply(TestCompany, axis=1)
-# output['Close Date'] = '2019-12-12 12:06:22'
-output['Permit Type']       = permits['Permit Type']
-output['Work Description']  = permits['Work Description']
-
-mask = output['AccountID'] == ''  # rows with no AccountID
-output_unknown_companies = output[mask]
-output_known_companies = output[~mask]
 
 print('ok')
 
@@ -90,8 +92,7 @@ output[['Stage Name',
         'Won', 'Closed']] = permits.apply(DealStage, axis=1)
 '''
 
-output_known_companies.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_known_companies.csv', index=False)
-output_unknown_companies.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_unknown_companies.csv', index=False)
+output.to_csv(path_or_buf='/media/alxfed/toca/aa-crm/preparation/unknown_companies.csv', index=False)
 
 '''
 These are the fields that are required for your Notes for Accounts. Please ensure that your Notes for Accounts CSV contains these columns.
