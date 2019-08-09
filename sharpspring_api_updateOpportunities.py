@@ -73,25 +73,25 @@ for opp in opportunities:
     perm_row = permit_data[permit_data['Address'] == opp]
     opp_row = opportunities_data[opportunities_data['Opp Name'] == opp]
     phone_mobile = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Mobile'].values[0]
-    if phone_mobile == np.nan:
+    if pd.isna(phone_mobile):
         phone_mobile = ''
     phone_landline = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Landline'].values[0]
-    if phone_landline == np.nan:
+    if pd.isna(phone_landline):
         phone_landline = ''
     phone_voip = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Voip'].values[0]
-    if phone_voip == np.nan:
+    if pd.isna(phone_voip):
         phone_voip = ''
     phone_toll = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Toll'].values[0]
-    if phone_toll == np.nan:
+    if pd.isna(phone_toll):
         phone_toll = ''
     architect_name = perm_row['ARCHITECT Name'].values[0]
-    if architect_name == np.nan:
+    if pd.isna(architect_name):
         architect_name = ''
     architect_phone = perm_row['ARCHITECT Phone Landline'].values[0]
-    if architect_phone == np.nan:
+    if pd.isna(architect_phone):
         architect_phone = ''
     phone_unindentified = perm_row['CONTRACTOR-GENERAL CONTRACTOR Phone Undinined'].values[0]
-    if phone_unindentified == np.nan:
+    if pd.isna(phone_unindentified):
         phone_unindentified = ''
     opportunity = {
                     "id": str(opp_row['Opp ID'].values[0]),
