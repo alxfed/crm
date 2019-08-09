@@ -10,11 +10,17 @@ companies = company_names['Name']
 seen = set()
 duplicates = set()
 
-for company in companies:
-    if company not in seen:
-        seen.add(company)
+def KnownCompany(name):
+    if name in companies.values:
+        result = True
     else:
-        duplicates.add(company)
+        result = False
+    return result
+
+
+name = 'Trinuc Llc.'
+re = KnownCompany(name)
+
 
 print('ok')
 
