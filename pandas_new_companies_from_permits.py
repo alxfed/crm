@@ -26,7 +26,7 @@ def TestCompany(row):
     company = row['CONTRACTOR-GENERAL CONTRACTOR Name']
     companies_list = companies['Name']
     for comp in companies_list:
-        if str(comp).startswith(company):
+        if str(comp).startswith(str(company)):
             known = True
             pass
 
