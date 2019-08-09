@@ -3,11 +3,12 @@ import pandas as pd
 import time
 
 
-permits_file_path = '/media/alxfed/toca/aa-crm/preparation/Real-permits-to-load-with-general-contractor.csv'
-new_companies_file_path = '/media/alxfed/toca/aa-crm/preparation/Permits_to_load_result_unknown_companies.csv'
-permits = pd.read_csv(permits_file_path)
+permits_file_path = '/media/alxfed/toca/aa-crm/preparation/permits-09-08-2019_10_54_27.csv'
+old_companies_file_path = '/media/alxfed/toca/aa-crm/preparation/hubspot-crm-exports-all-companies-2019-08-09.csv'
+companies = pd.read_csv(old_companies_file_path)
 time.sleep(3)
-companies = pd.read_csv(companies_file_path)
+permits = pd.read_csv(permits_file_path)
+
 print('ok')
 
 def TestCompany(row):
@@ -32,20 +33,6 @@ def ThirtyPercent(row):
     amount = round(amount)
     return amount
 
-
-'''Mandatory
-    Account Name/Account CRM ID
-    Amount
-    Close Date
-    Closed
-    Opportunity CRM ID
-    Opportunity Name
-    Owner Email Address
-    Primary Contact Email Address/Contact CRM ID
-    Probability
-    Stage Name
-    Won
-'''
 
 output = pd.DataFrame()
 
