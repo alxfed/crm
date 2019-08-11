@@ -9,10 +9,5 @@ COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/prope
 api_access = COMPANIES_PROPERTIES_URL + "?hapikey={}".format(API_KEY)
 result = requests.get(url=api_access)
 
-'''
-e = r.json()
-res = e['result']
-di = res['lead'][0]
-who = di['firstName']
-'''
+
 print(result)
