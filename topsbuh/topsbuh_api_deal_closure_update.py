@@ -17,13 +17,14 @@ DEAL_URL = 'https://api.hubapi.com/deals/v1/deal/'
 update_path = '/media/alxfed/toca/aa-crm/preparation/hubspot-crm-exports-all-deals-2019-08-12.csv'
 
 # request data
-data = {"properties": [
-                        {
-                          "name": "closedate",
-                          "value": ""
-                        }
-                      ]
-        }
+data = {
+          "properties":   [
+                            {
+                              "name": "closedate",
+                              "value": "1561006800000"
+                            }
+                          ]
+}
 
 with open(update_path) as f:
     f_csv = csv.reader(f)
@@ -37,6 +38,6 @@ with open(update_path) as f:
         data['properties'][0]['value'] = str(int(1000*date.timestamp()))
         data_json = json.dumps(data)
         api_access = "{}{}?hapikey={}".format(DEAL_URL, deal_id, API_KEY)
-        response = requests.put(url=api_access, json=data_json)
+        response = requests.put(url=api_access, headers={"content-type":"application/json"}, json=data_json)
 
 print('ok')
