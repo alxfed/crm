@@ -31,8 +31,8 @@ with open(update_path) as f:
         row = Row(*r)
         company_id = row.Company_ID
         data['properties'][0]['value'] = row.Phone_Number
-        data_json = json.dumps(data)
+        # data_json = json.dumps(data)
         api_access = "{}{}?hapikey={}".format(COMPANIES_URL, company_id, API_KEY)
-        response = requests.put(url=api_access, json=data_json)
+        response = requests.put(url=api_access, json=data)
 
 print('ok')

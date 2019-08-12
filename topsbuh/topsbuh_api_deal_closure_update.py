@@ -22,7 +22,7 @@ data = {
           "properties":   [
                             {
                               "name": "closedate",
-                              "value": "1561006800000"
+                              "value": ""
                             }
                           ]
 }
@@ -36,11 +36,11 @@ with open(update_path) as f:
         row = Row(*r)
         deal_id = row.Deal_ID
         date = datetime.fromisoformat(row.Permit_Issue_Date)
-        data['properties'][0]['value'] = str(int(1000*date.timestamp()))
+        data['properties'][0]['value'] = int(1000*date.timestamp())
         data_json = json.dumps(data)
         api_access = "{}{}?hapikey={}".format(DEAL_URL, deal_id, API_KEY)
         print(data_json)
         hdrs["Content-Type"] = "application/json"
-        response = requests.put(url=api_access, headers=hdrs, json=data_json)
+        response = requests.put(url=api_access, headers=hdrs, data=data_json)
 
 print('ok')
