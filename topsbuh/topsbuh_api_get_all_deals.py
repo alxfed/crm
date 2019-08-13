@@ -1,10 +1,6 @@
 import requests
 import os
-import re
-import csv
-import json
-import time
-from collections import namedtuple
+from collections import OrderedDict
 
 
 API_KEY = os.environ['API_KEY']
@@ -24,7 +20,14 @@ payload = {
         ]
 }
 
-response = requests.get(url=DEAL_URL, params=payload)
-got_it = response.json()
+hasmore = True
+rows = {}
+
+while hasmore:
+    chunk = OrderedDict()
+    response = requests.get(url=DEAL_URL, params=payload)
+    read_in = response.json()
+    chunk = read_in['deals']
+    hasmore = read_in['hasMore']
 
 print('ok')
