@@ -54,9 +54,7 @@ with open(companies_to_create_path) as f:
         response = requests.request("POST", url=COMPANIES_URL, json=data,
                                     headers=headers, params=querystring)
         if response.status_code == 200:
-            output_line = OrderedDict()
-            output_line.update({'companyId': response['companyId']})
-            output_line.update(response.json())
+            row.update({'companyId': response.json()['companyId']})
             pass
 
 print('ok')
