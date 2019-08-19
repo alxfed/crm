@@ -10,8 +10,8 @@ from collections import namedtuple
 API_KEY = os.environ['API_KEY']
 ME_URL = 'https://api.hubapi.com/integrations/v1/me'
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
-COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies/'
-update_path = '/media/alxfed/toca/aa-crm/preparation/companies_to_update.csv'
+COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/preparation/companies_to_create.csv'
 
 # request data
 data = {"properties": [
@@ -22,7 +22,7 @@ data = {"properties": [
                       ]
         }
 
-with open(update_path) as f:
+with open(companies_to_create_path) as f:
     f_csv = csv.reader(f)
     headers = next(f_csv)
     tuple_headers = [re.sub('[^a-zA-Z_]', '_', h) for h in headers]
