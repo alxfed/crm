@@ -38,9 +38,17 @@ hubspot_mapping = {
     'Google': 'googleplus_page',
     'Linkedin': 'linkedin_company_page'
 }
+
 # request data
 data = {"properties": []}
+
+# output
 output_rows = []
+output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
+           'Phone VoIP', 'Phone Toll', 'Phone Landline',
+           'Phone Unidentified', 'Address', 'City', 'Zipcode',
+           'State', 'Category', 'Website', 'Facebook',
+           'Twitter', 'Google', 'Linkedin', 'companyId']
 
 with open(companies_to_create_path) as f:
     f_csv = csv.DictReader(f, restkey='Rest', restval='')
@@ -55,6 +63,14 @@ with open(companies_to_create_path) as f:
                                     headers=headers, params=querystring)
         if response.status_code == 200:
             row.update({'companyId': response.json()['companyId']})
-            pass
+            output_rows.append(row)
+            print('ok')
+        else:
+            print('not ok!')
+
+with open(companies_created_path,'w') as f:
+    f_csv = csv.DictWriter(f, output_columns)
+    f_csv.writeheader()
+    f_csv.writerows(output_rows)
 
 print('ok')
