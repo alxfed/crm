@@ -66,7 +66,7 @@ with open(companies_to_create_path) as f:
             output_rows.append(row)
             print('ok')
         else:
-            print('not ok!')
+            print('not ok! ', response.status_code)
 
 with open(companies_created_path,'w') as f:
     f_csv = csv.DictWriter(f, output_columns)
