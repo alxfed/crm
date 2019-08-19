@@ -40,6 +40,7 @@ hubspot_mapping = {
 }
 # request data
 data = {"properties": []}
+output_rows = []
 
 with open(companies_to_create_path) as f:
     f_csv = csv.DictReader(f, restkey='Rest', restval='')
@@ -55,5 +56,7 @@ with open(companies_to_create_path) as f:
         if response.status_code == 200:
             output_line = OrderedDict()
             output_line.update({'companyId': response['companyId']})
+            output_line.update(response.json())
+            pass
 
 print('ok')
