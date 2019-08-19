@@ -12,7 +12,29 @@ ME_URL = 'https://api.hubapi.com/integrations/v1/me'
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
 companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/companies_to_create.csv'
+companies_created_path = '/media/alxfed/toca/aa-crm/uploads/companies_created.csv'
 
+# mapping of fields
+hubspot_mapping = {
+    'Name': 'name',
+    'Type': 'type',
+    'Phone Number': 'phone',
+    'Phone Mobile': 'phone_mobile',
+    'Phone VoIP': 'phone_voip',
+    'Phone Toll': 'phone_toll',
+    'Phone Landline': 'phone_landline',
+    'Phone Unidentified': 'phone_unidentified',
+    'Address': 'address',
+    'City': 'city',
+    'Zipcode': 'zip',
+    'State': 'state',
+    'Category': 'category',
+    'Website': 'website',
+    'Facebook': 'facebook_company_page',
+    'Twitter': 'twitterhandle',
+    'Google': 'googleplus_page',
+    'Linkedin': 'linkedin_company_page'
+}
 # request data
 data = {"properties": [
                         {
