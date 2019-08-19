@@ -11,7 +11,7 @@ API_KEY = os.environ['API_KEY']
 ME_URL = 'https://api.hubapi.com/integrations/v1/me'
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
-companies_to_create_path = '/media/alxfed/toca/aa-crm/preparation/companies_to_create.csv'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/companies_to_create.csv'
 
 # request data
 data = {"properties": [
