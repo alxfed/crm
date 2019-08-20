@@ -2,7 +2,6 @@ import requests
 import os
 import csv
 from collections import OrderedDict
-from random import randint
 
 
 API_KEY = os.environ['API_KEY']
@@ -55,6 +54,7 @@ connection_data = {
 # output
 output_rows = []
 output_columns = ['Name', 'companyId', 'firstname', 'lastname', 'email', 'vid', 'connected']
+enu = 0
 
 
 with open(companies_created_with_emails_path) as f:
@@ -67,7 +67,8 @@ with open(companies_created_with_emails_path) as f:
         list_of_emails = row['emails'].split(' ')
         for email in list_of_emails:
             name, _ = email.split('@')
-            lastname = 'Auto_' + str(randint(1, 999999))
+            lastname = 'Auto_' + str(enu+1)
+            enu += 1
             output_row['firstname'] = name
             output_row['lastname'] = lastname
             output_row['email'] = email
