@@ -37,7 +37,7 @@ output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 2
+limit = 3
 
 while has_more:
     api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
