@@ -45,14 +45,15 @@ while has_more:
     if response.status_code == 200:
         res         = response.json()
         has_more    = res['has-more']
+        offset      = res['offset']
         companies   = res['companies']
         for company in companies:
             row = OrderedDict()
             company_properts = company['properties']
             # name = company_properts['name']['value']
             row.update({'Name': company_properts['name']['value']})
+            # and other parameters like this                ^
             output_rows.append(row)
-            print('ok')
     else:
         print(response.status_code)
 
