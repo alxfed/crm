@@ -15,7 +15,7 @@ companies_downloaded_path = '/media/alxfed/toca/aa-crm/enrich/companies_download
 headers = {"Content-Type": "application/json"}
 
 def MakeParametersString(params_list, offset, limit):
-    parameters_string = '?hapikey='+API_KEY
+    parameters_string = 'hapikey='+API_KEY
     for item in params_list:
         parameters_string = '{}&properties={}'.format(parameters_string, item)
     parameters_string = '{}&offset={}&limit={}'.format(parameters_string, offset, limit)
@@ -37,18 +37,24 @@ output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 1
+limit = 2
 
 while has_more:
-    api_url = MakeParametersString(all_params, offset, limit)
+    api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
     response = requests.request("GET", url=api_url, headers=headers)
     if response.status_code == 200:
-        companies = response.json()
+        res         = response.json()
+        has_more    = res['has-more']
+        companies   = res['companies']
         for company in companies:
             row = OrderedDict()
-            row.update({'Name': response.json()['name']})
+            company_properts = company['properties']
+            # name = company_properts['name']['value']
+            row.update({'Name': company_properts['name']['value']})
             output_rows.append(row)
             print('ok')
+    else:
+        print(response.status_code)
 
 
 with open(companies_downloaded_path,'w') as f:
