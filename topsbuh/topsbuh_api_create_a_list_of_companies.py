@@ -11,7 +11,7 @@ API_KEY = os.environ['API_KEY']
 ME_URL = 'https://api.hubapi.com/integrations/v1/me'
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
-companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/companies_to_create.csv'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/new_companies.csv'
 companies_created_path = '/media/alxfed/toca/aa-crm/uploads/companies_created.csv'
 
 headers = {"Content-Type": "application/json"}
@@ -22,6 +22,7 @@ hubspot_mapping = {
     'Name': 'name',
     'Type': 'type',
     'Phone Number': 'phone',
+    'Phone Contact':'phone_contact',
     'Phone Mobile': 'phone_mobile',
     'Phone VoIP': 'phone_voip',
     'Phone Toll': 'phone_toll',
@@ -35,7 +36,6 @@ hubspot_mapping = {
     'Website': 'website',
     'Facebook': 'facebook_company_page',
     'Twitter': 'twitterhandle',
-    'Google': 'googleplus_page',
     'Linkedin': 'linkedin_company_page'
 }
 
@@ -44,11 +44,12 @@ data = {"properties": []}
 
 # output
 output_rows = []
-output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
+output_columns = ['Name', 'Type', 'Phone Number', 'Phone Contact',
+                  'Phone Mobile',
            'Phone VoIP', 'Phone Toll', 'Phone Landline',
            'Phone Unidentified', 'Address', 'City', 'Zipcode',
            'State', 'Category', 'Website', 'Facebook',
-           'Twitter', 'Google', 'Linkedin', 'companyId']
+           'Twitter', 'Linkedin', 'emails', 'email_class', 'companyId']
 
 with open(companies_to_create_path) as f:
     f_csv = csv.DictReader(f, restkey='Rest', restval='')
