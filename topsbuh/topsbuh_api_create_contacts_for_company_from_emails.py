@@ -7,8 +7,8 @@ from random import randint
 
 API_KEY = os.environ['API_KEY']
 CONTACT_CREATE_OR_UPDATE_URL = 'https://api.hubapi.com/contacts/v1/contact/createOrUpdate/email/'
-companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/uploads/companies_created_with_emails.csv'
-contacts_created_path = '/media/alxfed/toca/aa-crm/uploads/contacts_created.csv'
+companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_created_with_emails.csv'
+contacts_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_contacts_created.csv'
 
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
@@ -37,7 +37,7 @@ data = {'properties':
         },
         {
           "property": "jobtitle",
-          "value": "Architect & Designer employee"
+          "value": "Kitchen & Bath Designer employee"
         }
     ]
 }
@@ -46,6 +46,7 @@ data = {'properties':
 # output
 output_rows = []
 output_columns = ['Name', 'companyId', 'firstname', 'lastname', 'email', 'vid']
+nume = 4999
 
 
 with open(companies_created_with_emails_path) as f:
