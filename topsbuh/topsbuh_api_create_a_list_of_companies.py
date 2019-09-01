@@ -1,14 +1,16 @@
 import requests
 import os
-import re
 import csv
-import json
-import time
-from collections import OrderedDict
+
+
+def writeln(file_name, row_to_write):
+    with open(file_name, 'a') as f:
+        f_csv = csv.DictWriter(f, output_columns)
+        f_csv.writerow(row_to_write)
 
 
 API_KEY = os.environ['API_KEY']
-ME_URL = 'https://api.hubapi.com/integrations/v1/me'
+
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
 companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/new_companies.csv'
@@ -24,7 +26,7 @@ hubspot_mapping = {
     'Phone Number': 'phone',
     'Phone Contact':'phone_contact',
     'Phone Mobile': 'phone_mobile',
-    'Phone VoIP': 'phone_voip',
+    'Phone Voip': 'phone_voip',
     'Phone Toll': 'phone_toll',
     'Phone Landline': 'phone_landline',
     'Phone Unidentified': 'phone_unidentified',
@@ -50,6 +52,11 @@ output_columns = ['Name', 'Type', 'Phone Number', 'Phone Contact',
            'Phone Unidentified', 'Address', 'City', 'Zipcode',
            'State', 'Category', 'Website', 'Facebook',
            'Twitter', 'Linkedin', 'emails', 'email_class', 'companyId']
+
+# write an output file header
+with open(companies_created_path,'w') as f:
+    f_csv = csv.DictWriter(f, output_columns)
+    f_csv.writeheader()
 
 with open(companies_to_create_path) as f:
     f_csv = csv.DictReader(f, restkey='Rest', restval='')
