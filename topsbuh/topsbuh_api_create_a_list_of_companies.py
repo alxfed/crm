@@ -40,6 +40,7 @@ hubspot_mapping = {
     'Website': 'website',
     'Facebook': 'facebook_company_page',
     'Twitter': 'twitterhandle',
+    'Google': 'googleplus_page',
     'Linkedin': 'linkedin_company_page'
 }
 
@@ -53,7 +54,7 @@ output_columns = ['Name', 'Type', 'Phone Number', 'Phone Contact',
            'Phone Voip', 'Phone Toll', 'Phone Landline',
            'Phone Unknown', 'Address', 'City', 'Zipcode',
            'State', 'Category', 'Website', 'Facebook',
-           'Twitter', 'Linkedin', 'companyId']
+           'Twitter', 'Google', 'Linkedin', 'companyId']
 
 # write an output file header
 with open(companies_created_path,'w') as f:
