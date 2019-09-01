@@ -13,9 +13,9 @@ API_KEY = os.environ['API_KEY']
 
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
-companies_to_create_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_all_ready.csv'
-companies_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_created.csv'
-line_by_line_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_line_by_line.csv'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_all_ready_for_rerun.csv'
+companies_created_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_created_rerun.csv'
+line_by_line_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_line_by_line_rerun.csv'
 
 
 headers = {"Content-Type": "application/json"}
