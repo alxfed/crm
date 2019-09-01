@@ -54,7 +54,7 @@ connection_data = {
 # output
 output_rows = []
 output_columns = ['Name', 'companyId', 'firstname', 'lastname', 'email', 'vid', 'connected']
-enu = 8300
+enu = 11000
 
 
 with open(companies_created_with_emails_path) as f:
