@@ -85,4 +85,4 @@ with open(companies_created_path,'w') as f:
     f_csv.writeheader()
     f_csv.writerows(output_rows)
 
-print('ok')
+print('Big OK')
