@@ -13,8 +13,8 @@ API_KEY = os.environ['API_KEY']
 
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
-companies_to_create_path = '/media/alxfed/toca/aa-crm/uploads/new_companies.csv'
-companies_created_path = '/media/alxfed/toca/aa-crm/uploads/companies_created.csv'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_all_ready.csv'
+companies_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_created.csv'
 
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
@@ -29,7 +29,7 @@ hubspot_mapping = {
     'Phone Voip': 'phone_voip',
     'Phone Toll': 'phone_toll',
     'Phone Landline': 'phone_landline',
-    'Phone Unidentified': 'phone_unidentified',
+    'Phone Unknown': 'phone_unidentified',
     'Address': 'address',
     'City': 'city',
     'Zipcode': 'zip',
