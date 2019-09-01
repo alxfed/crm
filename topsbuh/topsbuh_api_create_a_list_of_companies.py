@@ -3,11 +3,11 @@ import os
 import csv
 
 
+# open file for append and write one line
 def writeln(file_name, row_to_write):
     with open(file_name, 'a') as f:
         f_csv = csv.DictWriter(f, output_columns)
         f_csv.writerow(row_to_write)
-
 
 API_KEY = os.environ['API_KEY']
 
@@ -15,6 +15,8 @@ COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/prope
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
 companies_to_create_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_all_ready.csv'
 companies_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_created.csv'
+line_by_line_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_line_by_line.csv'
+
 
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
@@ -48,10 +50,10 @@ data = {"properties": []}
 output_rows = []
 output_columns = ['Name', 'Type', 'Phone Number', 'Phone Contact',
                   'Phone Mobile',
-           'Phone VoIP', 'Phone Toll', 'Phone Landline',
-           'Phone Unidentified', 'Address', 'City', 'Zipcode',
+           'Phone Voip', 'Phone Toll', 'Phone Landline',
+           'Phone Unknown', 'Address', 'City', 'Zipcode',
            'State', 'Category', 'Website', 'Facebook',
-           'Twitter', 'Linkedin', 'emails', 'email_class', 'companyId']
+           'Twitter', 'Linkedin', 'companyId']
 
 # write an output file header
 with open(companies_created_path,'w') as f:
@@ -71,6 +73,7 @@ with open(companies_to_create_path) as f:
                                     headers=headers, params=querystring)
         if response.status_code == 200:
             row.update({'companyId': response.json()['companyId']})
+            writeln(line_by_line_path, row_to_write=row)
             output_rows.append(row)
             print('ok')
         else:
