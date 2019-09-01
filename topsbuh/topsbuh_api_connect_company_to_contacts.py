@@ -7,15 +7,15 @@ from collections import OrderedDict
 API_KEY = os.environ['API_KEY']
 CONTACT_CREATE_OR_UPDATE_URL = 'https://api.hubapi.com/contacts/v1/contact/createOrUpdate/email/'
 CONNECTION_CREATE_URL = 'https://api.hubapi.com/crm-associations/v1/associations'
-companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/uploads/companies_created_with_emails.csv'
-contacts_created_path = '/media/alxfed/toca/aa-crm/uploads/contacts_created.csv'
+companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_created_with_emails.csv'
+contacts_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_and_bath_designers_contacts_created.csv'
 
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
 
-input_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
-                 'Phone VoIP', 'Phone Toll', 'Phone Landline',
-                 'Phone Unidentified', 'Address', 'City',
+input_columns = ['Name', 'Type', 'Phone Number', 'Phone Contact', 'Phone Mobile',
+                 'Phone Voip', 'Phone Toll', 'Phone Landline',
+                 'Phone Unknown', 'Address', 'City',
                  'Zipcode', 'State', 'Category', 'Website',
                  'Facebook', 'Twitter', 'Google', 'Linkedin',
                  'companyId', 'emails']
@@ -37,7 +37,7 @@ data = {'properties':
         },
         {
           "property": "jobtitle",
-          "value": "Architect & Designer employee"
+          "value": "Kitchen & Bath Designer employee"
         }
     ]
 }
@@ -54,7 +54,7 @@ connection_data = {
 # output
 output_rows = []
 output_columns = ['Name', 'companyId', 'firstname', 'lastname', 'email', 'vid', 'connected']
-enu = 0
+enu = 6600
 
 
 with open(companies_created_with_emails_path) as f:
@@ -83,9 +83,9 @@ with open(companies_created_with_emails_path) as f:
                 output_row['vid'] = vid
                 connection_data['fromObjectId'] = companyId
                 connection_data['toObjectId'] = vid
-                response = requests.request("PUT", url=CONNECTION_CREATE_URL, json=connection_data,
+                resp = requests.request("PUT", url=CONNECTION_CREATE_URL, json=connection_data,
                                         headers=headers, params=querystring)
-                if response.status_code == 204:
+                if resp.status_code == 204:
                     output_row['connected'] = True
                 else:
                     output_row['connected'] = False
@@ -93,11 +93,11 @@ with open(companies_created_with_emails_path) as f:
                 output_row['vid'] = ''
                 output_row['connected'] = False
             output_rows.append(output_row)
-            print(output_row, response.status_code)
+            print(output_row, resp.status_code)
 
 with open(contacts_created_path,'w') as f:
     f_csv = csv.DictWriter(f, output_columns)
     f_csv.writeheader()
     f_csv.writerows(output_rows)
 
-print('ok')
+print('Big OK')
