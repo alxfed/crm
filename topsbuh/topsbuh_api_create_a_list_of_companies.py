@@ -13,9 +13,9 @@ API_KEY = os.environ['API_KEY']
 
 COMPANIES_PROPERTIES_URL = 'https://api.hubapi.com/properties/v1/companies/properties'
 COMPANIES_URL = 'https://api.hubapi.com/companies/v2/companies'
-companies_to_create_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_all_ready_for_rerun.csv'
-companies_created_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_created_rerun.csv'
-line_by_line_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_line_by_line_rerun.csv'
+companies_to_create_path = '/media/alxfed/toca/aa-crm/int-desanddec/upload/int_designers_without_emails.csv'
+companies_created_path = '/media/alxfed/toca/aa-crm/int-desanddec/upload/int_designers_created.csv'
+line_by_line_path = '/media/alxfed/toca/aa-crm/int-desanddec/upload/int_designers_line_by_line.csv'
 
 
 headers = {"Content-Type": "application/json"}
@@ -45,6 +45,7 @@ hubspot_mapping = {
 }
 
 # request data
+indx = 0
 data = {"properties": []}
 
 # output
@@ -76,7 +77,8 @@ with open(companies_to_create_path) as f:
             row.update({'companyId': response.json()['companyId']})
             writeln(line_by_line_path, row_to_write=row)
             output_rows.append(row)
-            print('ok')
+            indx +=1
+            print('ok', indx)
         else:
             print('not ok! ', response.status_code)
 
@@ -85,4 +87,4 @@ with open(companies_created_path,'w') as f:
     f_csv.writeheader()
     f_csv.writerows(output_rows)
 
-print('Big OK')
+print('Big OK', indx)

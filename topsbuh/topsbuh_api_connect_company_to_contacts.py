@@ -7,8 +7,8 @@ from collections import OrderedDict
 API_KEY = os.environ['API_KEY']
 CONTACT_CREATE_OR_UPDATE_URL = 'https://api.hubapi.com/contacts/v1/contact/createOrUpdate/email/'
 CONNECTION_CREATE_URL = 'https://api.hubapi.com/crm-associations/v1/associations'
-companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_created_rerun_with_emails.csv'
-contacts_created_path = '/media/alxfed/toca/aa-crm/kb-remodelers/upload/kitchen_and_bath_remodelers_contacts_created_two_plus_rerun.csv'
+companies_created_with_emails_path = '/media/alxfed/toca/aa-crm/int-desanddec/upload/int_designers_created_with_emails.csv'
+contacts_created_path = '/media/alxfed/toca/aa-crm/int-desanddec/upload/int_designers_contacts_created.csv'
 
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
@@ -37,7 +37,7 @@ data = {'properties':
         },
         {
           "property": "jobtitle",
-          "value": "Kitchen & Bath Designer employee"
+          "value": "Interior Designer & Decorator employee"
         }
     ]
 }
