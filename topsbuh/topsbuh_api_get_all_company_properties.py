@@ -20,13 +20,15 @@ parameter = {
     "options": ""
 }
 
+names = []
+
 response = requests.request("GET", url=GET_ALL_COMPANY_PROPERTIES_URL, params=querystring)
 if response.status_code == 200:
     res = response.json()
     for item in res:
-        parameter = item
-        pass
+        name = item['name']
+        names.append(name)
 else:
     print('Error ', response.status_code)
-print(res)
+print(names)
 print('ok')
