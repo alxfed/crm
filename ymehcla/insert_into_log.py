@@ -1,5 +1,5 @@
-"""
-API calls with a log file in a database
+# -*- coding: utf-8 -*-
+"""API calls with a log file in a database.
 """
 import sqlite3
 
