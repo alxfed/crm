@@ -64,7 +64,7 @@ def main():
     except sqlite3.Error as er:
         print('sqlite3 Error ', er.args[0])
         exit(247)
-    # main action
+    # main action here
 
     co.close()
     return
