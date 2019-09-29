@@ -25,9 +25,9 @@ domain = 'ethanalleninc.com'
 
 request_url = f'{hubspot.COMPANY_SEARCH_URL}{domain}/companies' #.format(hubspot.COMPANY_SEARCH_URL, domain)
 response = requests.request('POST', url=request_url,
-                            headers=hubspot.hbsp_headr,
+                            headers=hubspot.header,
                             json=payld,
-                            params=hubspot.hbsp_param)
+                            params=hubspot.parameters)
 if response.status_code == 200:
     res = response.json()
 else:
