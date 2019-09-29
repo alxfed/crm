@@ -4,26 +4,25 @@
 from os import environ
 import json
 import requests
+from comp import companies_function
 
 
 api_key = environ['API_KEY']
 parameters = {'hapikey': api_key}
 header = {'Content-Type': 'application/json'}
 COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
+a = companies_function
 
 
 def search_for_company_by_domain(domain, paramlist):
-    payload = json.loads({
-        "limit": 2,
-        "requestOptions": {
-            "properties": []
-            },
-        "offset": {
-            "isPrimary": True,
-            "companyId": 0
-        }
-    })
-    payload['properties'] = paramlist
+    payload = json.dumps({'limit': 2,
+                          'requestOptions':
+                              {'properties': paramlist
+                               },
+                          'offset': {'isPrimary': True,
+                                     'companyId': 0
+                                     }
+                         })
     request_url = f'{COMPANY_SEARCH_URL}{domain}/companies'
     response = requests.request('POST', url=request_url,
                                 headers=header,
