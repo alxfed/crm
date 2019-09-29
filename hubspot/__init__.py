@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""...
+"""hubspot utilities and a module
 """
 from os import environ
 
