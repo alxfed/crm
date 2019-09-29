@@ -10,9 +10,9 @@ hbsp_headr = {'Content-Type': 'application/json'}
 
 
 def main():
+    print('main: ok')
     return
 
 
 if __name__ == '__main__':
     main()
-    print('main - done')
