@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """...
 """
+
+
 def companies_function(param):
     return param
 

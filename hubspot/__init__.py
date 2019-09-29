@@ -4,7 +4,7 @@
 from os import environ
 import json
 import requests
-from comp import companies_function
+from hubspot.comp import companies_function
 
 
 api_key = environ['API_KEY']
