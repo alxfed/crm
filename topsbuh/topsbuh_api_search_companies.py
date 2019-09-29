@@ -1,16 +1,15 @@
-import requests
-import os
-import csv
-from collections import OrderedDict
+"""search
+"""
 import hubspot
 
 
 domain = 'ethanalleninc.com'
+paramlist = ["domain", "createdate", "name", "hs_lastmodifieddate"]
 
-response = search_for_company_by_domain(domain, paramlist)
+response = hubspot.search_for_company_by_domain(domain, paramlist)
 
-if response.status_code == 200:
-    res = response.json()
+if response:
+    print(response)
 else:
-    print(response.status_code)
+    print('nothing')
 print('ok')
