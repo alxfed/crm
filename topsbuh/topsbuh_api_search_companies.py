@@ -5,13 +5,6 @@ from collections import OrderedDict
 import hubspot
 
 
-#API_KEY = os.environ['API_KEY']
-API_KEY = hubspot.api_key
-COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
-
-headers = {"Content-Type": "application/json"}
-querystring = {"hapikey": API_KEY}
-
 payld = {
       "limit": 2,
       "requestOptions": {
@@ -30,8 +23,11 @@ payld = {
 
 domain = 'ethanalleninc.com'
 
-req_url = '{}{}/companies'.format(COMPANY_SEARCH_URL,domain)
-response = requests.request('POST', url=req_url, headers=headers, json=payld, params=querystring)
+request_url = f'{hubspot.COMPANY_SEARCH_URL}{domain}/companies' #.format(hubspot.COMPANY_SEARCH_URL, domain)
+response = requests.request('POST', url=request_url,
+                            headers=hubspot.hbsp_headr,
+                            json=payld,
+                            params=hubspot.hbsp_param)
 if response.status_code == 200:
     res = response.json()
 else:
