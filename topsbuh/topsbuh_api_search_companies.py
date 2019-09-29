@@ -7,14 +7,13 @@ from collections import OrderedDict
 API_KEY = os.environ['API_KEY']
 COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
 
-
 headers = {"Content-Type": "application/json"}
 querystring = {"hapikey": API_KEY}
 
-payload = {
+payld = {
       "limit": 2,
       "requestOptions": {
-        "properties": [
+        "properties": [  # list of parameters that will come in the response
           "domain",
           "createdate",
           "name",
@@ -27,35 +26,12 @@ payload = {
       }
     }
 
-# output - none
-delete_log = []
-output_columns = ['companyId', 'deleted', 'reason']
-
 domain = 'ethanalleninc.com'
 
-
-with open(companies_to_delete_path) as f:
-    f_csv = csv.DictReader(f, restkey='Rest', restval='')
-    for row in f_csv:
-        id = row['Company ID']
-        req_url = '{}{}'.format(COMPANY_DELETE_URL, id)
-        response = requests.request('POST', url=req_url,
-                                    headers=headers, params=querystring)
-        if response.status_code == 200:
-            res = response.json()
-            delete_log.append(res)
-            print(res, '200')
-        else:
-            res = response.json()
-            delete_log.append(res)
-            print(res, response.status_code)
-
-'''
-with open(delete_log_path,'w') as f:
-    f_csv = csv.DictWriter(f, output_columns)
-    f_csv.writeheader()
-    f_csv.writerows(delete_log)
-
-'''
-
+req_url = '{}{}/companies'.format(COMPANY_SEARCH_URL,domain)
+response = requests.request('POST', url=req_url, headers=headers, json=payld, params=querystring)
+if response.status_code == 200:
+    res = response.json()
+else:
+    print(response.status_code)
 print('ok')
