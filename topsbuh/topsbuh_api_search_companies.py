@@ -2,9 +2,11 @@ import requests
 import os
 import csv
 from collections import OrderedDict
+import hubspot
 
 
-API_KEY = os.environ['API_KEY']
+#API_KEY = os.environ['API_KEY']
+API_KEY = hubspot.api_key
 COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
 
 headers = {"Content-Type": "application/json"}
