@@ -15,7 +15,7 @@ def search_for_company_by_domain(domain, paramlist):
                 "isPrimary": True,
                 "companyId": 0
                 }
-            }
+              }
     request_url = f'{constants. COMPANY_SEARCH_URL}{domain}/companies'
     response = requests.request('POST', url=request_url,
                                 headers=constants.header,
