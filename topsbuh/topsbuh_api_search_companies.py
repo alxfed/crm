@@ -12,7 +12,7 @@ def main():
         print(response)
     else:
         print('nothing')
-    print('\n\nok\n\n')
+    print('\n\nok\n')
     return
 
 
