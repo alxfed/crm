@@ -15,6 +15,7 @@ def search_for_contacts(query_term):
         re = None
     return re
 
+
 def main():
     return
 
