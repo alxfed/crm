@@ -1,14 +1,8 @@
-# -*- coding: utf-8 -*-
-"""hubspot utilities and a module
-"""
-from . import constants, companies
-
-
 __all__ = ['constants', 'companies']
 
 
 def main():
-    print('main in __init__: ok')
+    print('main in hubspot.__init__.py: ok')
     return
 
 

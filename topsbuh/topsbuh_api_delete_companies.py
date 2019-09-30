@@ -1,11 +1,11 @@
 import requests
 import os
 import csv
-from collections import OrderedDict
+import hubspot.constants as hsc
 
 
 API_KEY = os.environ['API_KEY']
-COMPANY_DELETE_URL = 'https://api.hubapi.com/companies/v2/companies/'
+COMPANY_DELETE_URL = hsc.COMPANY_DELETE_URL #= hubspot.COMPANY_DELETE_URL  # 'https://api.hubapi.com/companies/v2/companies/'
 companies_to_delete_path = '/home/alxfed/Documents/EthanAllen.csv'
 delete_log_path = '/home/alxfed/Documents/EthanAllen_deleted_log.csv'
 
