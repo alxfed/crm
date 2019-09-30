@@ -4,6 +4,9 @@
 from . import constants, companies
 
 
+__all__ = ['constants', 'companies']
+
+
 def main():
     print('main in __init__: ok')
     return
