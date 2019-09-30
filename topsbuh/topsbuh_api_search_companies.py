@@ -1,13 +1,13 @@
 """search
 """
-from hubspot.companies import search_for_company_by_domain
+import hubspot as hs
 
 
 def main():
     domain = 'ethanalleninc.com'
     paramlist = ['domain', 'createdate', 'name', 'hs_lastmodifieddate']
 
-    response = search_for_company_by_domain(domain, paramlist)
+    response = hs.companies.search_for_company_by_domain(domain, paramlist)
     if response:
         print(response)
     else:
