@@ -7,7 +7,9 @@ from os import environ
 api_key = environ['API_KEY']
 parameters = {'hapikey': api_key}
 header = {'Content-Type': 'application/json'}
+
 COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
+COMPANY_DELETE_URL = 'https://api.hubapi.com/companies/v2/companies/'
 
 
 def main():
