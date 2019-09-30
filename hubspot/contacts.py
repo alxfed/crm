@@ -19,6 +19,7 @@ def search_for_contacts(query_term):
 
 
 def main():
+    print('\nYou launched the module as main\n')
     return
 
 
