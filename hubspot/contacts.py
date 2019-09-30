@@ -10,8 +10,10 @@ def search_for_contacts(query_term):
     if response.status_code == 200:
         re = response.json()
     elif response.status_code > 200:
+        print('The query: ', query_term, ' didnt work')
         re = None
     else:
+        print('The query: ', query_term, ' returned something weird')
         re = None
     return re
 
