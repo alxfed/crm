@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 """...
 """
-import hubspot as hs
+import hubspot
 
 
 def main():
     string = 'kelli@moannasworkroom.com'
-    response = hs.contacts.search_for_contacts(string)
+    response = hubspot.contacts.search_for_contacts(string)
     return
 
 

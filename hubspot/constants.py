@@ -9,8 +9,10 @@ portal_id = environ['PORTAL_ID']
 parameters = {'hapikey': api_key}
 header = {'Content-Type': 'application/json'}
 
-COMPANY_SEARCH_URL = 'https://api.hubapi.com/companies/v2/domains/'
-COMPANY_DELETE_URL = 'https://api.hubapi.com/companies/v2/companies/'
+COMPANY_CREATE_URL  = 'https://api.hubapi.com/companies/v2/companies'
+COMPANY_DELETE_URL  = 'https://api.hubapi.com/companies/v2/companies/'
+COMPANY_SEARCH_URL  = 'https://api.hubapi.com/companies/v2/domains/'
+
 
 CONTACT_SEARCH_QUERY_URL = 'https://api.hubapi.com/contacts/v1/search/query?q='
 
