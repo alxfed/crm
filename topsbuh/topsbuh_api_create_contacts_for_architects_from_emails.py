@@ -14,7 +14,7 @@ contacts_created_path = '/media/alxfed/toca/aa-crm/kb-designers/upload/kitchen_a
 
 # emails are in the 'Email' column of contacts file
 existing_contacts = pd.read_csv(existing_contacts_path)
-known_contacts = set(existing_contacts['Email'])
+known_contacts = set(existing_contacts['Email'].unique())
 
 
 headers = {"Content-Type": "application/json"}
