@@ -36,6 +36,10 @@ data = {'properties':
           "value": ""
         },
         {
+          "property": "company_index",
+          "value": ""
+        },
+        {
           "property": "jobtitle",
           "value": "Kitchen & Bath Designer employee"
         }
@@ -56,7 +60,7 @@ with open(companies_created_with_emails_path) as f:
         output_row['Name'] = row['Name']
         output_row['companyId'] = row['companyId']
         list_of_emails = row['emails'].split(' ')
-        for email in list_of_emails:
+        for index, email in enumerate(list_of_emails):
             name, _ = email.split('@')
             lastname = 'Auto_' + str(randint(1, 999999))
             output_row['firstname'] = name
@@ -65,6 +69,7 @@ with open(companies_created_with_emails_path) as f:
             data['properties'][0]['value'] = name
             data['properties'][1]['value'] = lastname
             data['properties'][2]['value'] = row['Name']
+            data['properties'][3]['value'] = str(index+1)
             req_url = '{}{}/'.format(CONTACT_CREATE_OR_UPDATE_URL, email)
             response = requests.request("POST", url=req_url, json=data,
                                         headers=headers, params=querystring)
