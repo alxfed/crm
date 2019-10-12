@@ -5,13 +5,10 @@ import pandas as pd
 
 
 def main():
-    existing_contacts_path = '/media/alxfed/toca/aa-crm/work/all-contacts.csv'
+    contacts_file_path = '/media/alxfed/toca/aa-crm/work/all-contacts.csv'
     # emails are in the 'Email' column of contacts file
-    existing_contacts = pd.read_csv(existing_contacts_path, dtype=object)
-    known_contacts = existing_contacts['Email']
-    known = known_contacts.unique()
-    contacts = set(known_contacts.unique())
-    cont_list = known_contacts.tolist()
+    contacts = pd.read_csv(contacts_file_path, dtype=object)
+    known_contacts = set(contacts['Email'].unique())
     return
 
 
