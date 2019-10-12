@@ -9,6 +9,7 @@ def main():
     # emails are in the 'Email' column of contacts file
     contacts = pd.read_csv(contacts_file_path, dtype=object)
     known_contacts = set(contacts['Email'].unique())
+
     return
 
 
