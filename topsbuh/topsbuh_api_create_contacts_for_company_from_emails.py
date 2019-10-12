@@ -50,7 +50,6 @@ data = {'properties':
 # output
 output_rows = []
 output_columns = ['Name', 'companyId', 'firstname', 'lastname', 'email', 'vid']
-nume = 4999
 
 
 with open(companies_created_with_emails_path) as f:
@@ -69,7 +68,11 @@ with open(companies_created_with_emails_path) as f:
             data['properties'][0]['value'] = name
             data['properties'][1]['value'] = lastname
             data['properties'][2]['value'] = row['Name']
-            data['properties'][3]['value'] = str(index+1)
+            if name.startswith('info'):
+                ind = '0'
+            else:
+                ind = str(index+1)
+            data['properties'][3]['value'] = ind
             req_url = '{}{}/'.format(CONTACT_CREATE_OR_UPDATE_URL, email)
             response = requests.request("POST", url=req_url, json=data,
                                         headers=headers, params=querystring)
