@@ -58,7 +58,7 @@ while has_more:
             output_rows.append(row)
         print('offset: ', offset)
     else:
-        print(response.status_code)
+        print('Error: ', response.status_code)
 
 all_companies = DataFrame.from_records(output_rows)
 with open(companies_downloaded_path,'w') as f:
