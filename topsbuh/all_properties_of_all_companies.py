@@ -30,12 +30,12 @@ all_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
 
 # output
 output_rows = []
-output_columns = []
+output_columns = ["companyId", "isDeleted"]
 
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 10
+limit = 100
 
 while has_more:
     api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
@@ -47,6 +47,8 @@ while has_more:
         companies   = res['companies']
         for company in companies:
             row = dict()
+            row.update({"companyId": company["companyId"],
+                        "isDeleted": company["isDeleted"]})
             co_properties = company['properties']
             # name = co_properties['name']['value']
             for co_property in co_properties:
