@@ -4,7 +4,6 @@ import re
 import csv
 import json
 import time
-from collections import OrderedDict
 from pandas import DataFrame
 
 
@@ -30,7 +29,7 @@ all_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
 
 # output
 output_rows = []
-output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
+output_columns = ['companyId', 'isDeleted', 'Name', 'Type', 'Phone Number', 'Phone Mobile',
            'Phone VoIP', 'Phone Toll', 'Phone Landline',
            'Phone Unidentified', 'Address', 'City', 'Zipcode',
            'State', 'Category', 'Website']
@@ -49,11 +48,15 @@ while has_more:
         offset      = res['offset']
         companies   = res['companies']
         for company in companies:
-            row = OrderedDict()
-            company_properties = company['properties']
-            # name = company_properties['name']['value']
-            row.update({'Name': company_properties['name']['value']})
-            # and other parameters like this                ^
+            row = {}
+            row.update({"companyId": company["companyId"],
+                        "isDeleted": company["isDeleted"]})
+            co_properties = company['properties']
+            for co_property in co_properties:
+                if co_property not in output_columns:
+                    output_columns.append(co_property)
+                    print('Appending a property to output colunms list: ', co_property)
+                row.update({co_properties[co_property]['name']: co_properties[co_property]['value']})
             output_rows.append(row)
         print('offset: ', offset)
     else:
