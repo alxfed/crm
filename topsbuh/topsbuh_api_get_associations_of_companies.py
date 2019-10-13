@@ -73,6 +73,6 @@ with open(downloaded_associations_path,'w') as f:
     f_csv.writeheader()
     f_csv.writerows(output_rows)
 
-all_contacts.to_csv('/media/alxfed/toca/aa-crm/enrich/contacts_dataframe.csv', index=False)
+all_contacts.to_csv('/media/alxfed/toca/aa-crm/enrich/associations_dataframe.csv', index=False)
 
 print('ok')
