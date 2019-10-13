@@ -37,7 +37,7 @@ output_columns = ['companyId', 'isDeleted', 'name', 'type',
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 250
+limit = 250  # 250 is a maximum
 
 while has_more:
     api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
