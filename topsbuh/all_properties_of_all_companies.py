@@ -35,7 +35,7 @@ output_columns = ["companyId", "isDeleted"]
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 100
+limit = 250
 
 while has_more:
     api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
@@ -60,7 +60,7 @@ while has_more:
     else:
         print('Error: ', response.status_code)
 
-all_companies = DataFrame.from_records(output_rows)
+all_companies = DataFrame.from_records(data=output_rows, columns=output_columns)
 with open(companies_downloaded_path,'w') as f:
     f_csv = csv.DictWriter(f, output_columns)
     f_csv.writeheader()
