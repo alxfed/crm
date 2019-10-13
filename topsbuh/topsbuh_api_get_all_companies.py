@@ -14,11 +14,10 @@ companies_downloaded_path = '/media/alxfed/toca/aa-crm/enrich/companies_download
 
 headers = {"Content-Type": "application/json"}
 
-def MakeParametersString(params_list, offset, limit):
-    parameters_string = 'hapikey='+API_KEY
-    for item in params_list:
-        parameters_string = '{}&properties={}'.format(parameters_string, item)
-    parameters_string = '{}&offset={}&limit={}'.format(parameters_string, offset, limit)
+def make_parameters_string(offset, limit):
+    par_string = 'hapikey='+API_KEY
+    parameters_string = '{}{}&offset={}&limit={}'.format(par_string, parameters_substring,
+                                                         offset, limit)
     return parameters_string
 
 # company parameters
@@ -26,6 +25,10 @@ all_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
               'phone_toll','phone_landline','phone_unidentified',
               'address','city','zip','state',
               'category','website']
+
+parameters_substring = ''
+for item in all_params:
+    parameters_substring = '{}&properties={}'.format(parameters_substring, item)
 
 # output
 output_rows = []
@@ -40,7 +43,7 @@ offset = 0
 limit = 250  # 250 is a maximum
 
 while has_more:
-    api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
+    api_url = '{}?{}'.format(COMPANIES_URL, make_parameters_string(offset, limit))
     response = requests.request("GET", url=api_url, headers=headers)
     if response.status_code == 200:
         res         = response.json()
@@ -62,10 +65,13 @@ while has_more:
     else:
         print(response.status_code)
 
-all_companies = DataFrame.from_records(output_rows)
+all_companies = DataFrame.from_records(data=output_rows, columns=output_columns)
+
 with open(companies_downloaded_path,'w') as f:
     f_csv = csv.DictWriter(f, output_columns)
     f_csv.writeheader()
     f_csv.writerows(output_rows)
+
+all_companies.to_csv('/media/alxfed/toca/aa-crm/enrich/companies_dataframe.csv', index=False)
 
 print('ok')
