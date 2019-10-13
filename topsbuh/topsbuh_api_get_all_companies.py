@@ -29,10 +29,10 @@ all_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
 
 # output
 output_rows = []
-output_columns = ['companyId', 'isDeleted', 'Name', 'Type', 'Phone Number', 'Phone Mobile',
-           'Phone VoIP', 'Phone Toll', 'Phone Landline',
-           'Phone Unidentified', 'Address', 'City', 'Zipcode',
-           'State', 'Category', 'Website']
+output_columns = ['companyId', 'isDeleted', 'name', 'type',
+                  'phone', 'phone_mobile', 'phone_voip',
+                  'phone_toll','phone_landline','phone_unidentified',
+                  'address','city','zip','state', 'category','website']
 
 # prepare for the pagination
 has_more = True
@@ -56,7 +56,7 @@ while has_more:
                 if co_property not in output_columns:
                     output_columns.append(co_property)
                     print('Appending a property to output colunms list: ', co_property)
-                row.update({co_properties[co_property]['name']: co_properties[co_property]['value']})
+                row.update({co_property: co_properties[co_property]['value']})
             output_rows.append(row)
         print('offset: ', offset)
     else:
