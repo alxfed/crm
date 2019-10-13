@@ -30,10 +30,7 @@ all_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
 
 # output
 output_rows = []
-output_columns = ['Name', 'Type', 'Phone Number', 'Phone Mobile',
-           'Phone VoIP', 'Phone Toll', 'Phone Landline',
-           'Phone Unidentified', 'Address', 'City', 'Zipcode',
-           'State', 'Category', 'Website']
+output_columns = []
 
 # prepare for the pagination
 has_more = True
@@ -49,11 +46,13 @@ while has_more:
         offset      = res['offset']
         companies   = res['companies']
         for company in companies:
-            row = OrderedDict()
-            company_properties = company['properties']
-            # name = company_properties['name']['value']
-            row.update({'Name': company_properties['name']['value']})
-            # and other parameters like this                ^
+            row = dict()
+            co_properties = company['properties']
+            # name = co_properties['name']['value']
+            for co_property in co_properties:
+                if co_property not in output_columns:
+                    output_columns.append(co_property)
+                row.update({co_property: co_properties[co_property]['value']})
             output_rows.append(row)
         print('offset: ', offset)
     else:
