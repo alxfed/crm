@@ -15,8 +15,9 @@ companies_downloaded_path = '/media/alxfed/toca/aa-crm/enrich/companies_download
 headers = {"Content-Type": "application/json"}
 
 def make_parameters_string(offset, limit):
-    par_string = 'hapikey='+API_KEY
-    parameters_string = '{}{}&offset={}&limit={}'.format(par_string, parameters_substring,
+    authentication = 'hapikey='+API_KEY
+    parameters_string = '{}{}&offset={}&limit={}'.format(authentication,
+                                                         parameters_substring,
                                                          offset, limit)
     return parameters_string
 
