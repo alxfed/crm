@@ -35,7 +35,7 @@ output_columns = []
 # prepare for the pagination
 has_more = True
 offset = 0
-limit = 100
+limit = 10
 
 while has_more:
     api_url = '{}?{}'.format(COMPANIES_URL, MakeParametersString(all_params, offset, limit))
