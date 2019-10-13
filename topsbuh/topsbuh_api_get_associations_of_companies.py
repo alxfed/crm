@@ -10,7 +10,7 @@ from pandas import DataFrame
 API_KEY = os.environ['API_KEY']
 
 ASSOCIATIONS_URL = 'https://api.hubapi.com/crm-associations/v1/associations/'
-ASSOCIATIONS_TYPE = '/HUBSPOT_DEFINED/1'
+ASSOCIATIONS_TYPE = '/HUBSPOT_DEFINED/2'
 companies_path = '/media/alxfed/toca/aa-crm/enrich/companies_downloaded.csv'
 downloaded_associations_path = '/media/alxfed/toca/aa-crm/enrich/associations_downloaded.csv'
 
