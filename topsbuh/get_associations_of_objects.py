@@ -22,7 +22,10 @@ def main():
         f_csv = csv.DictReader(f, restkey='Rest', restval='')
         for row in f_csv:
             output_row = {}
-            associations = hubspot.associations.get_associations_of_object(row['companyId'], 2)
+            associations = ''
+            assoc = hubspot.associations.get_associations_of_object(row['companyId'], 2)
+            if assoc:
+                associations = ' '.join(assoc)
             output_row.update({'companyId': row['companyId'],
                                'associations': associations})
             output_rows.append(output_row)

@@ -33,6 +33,7 @@ def get_associations_of_object(object_id, association_type):
 
 
 def main():
+    print('You have launched the module as __main__')
     return
 
 
