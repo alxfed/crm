@@ -19,18 +19,21 @@ def search_for_contacts(query_term):
 
 
 def get_all_contacts(request_parameters):
-    '''Download the complete list of contacts from the portal
+    '''Downloads the complete list of contacts from the portal
     :param request_parameters: list of Contact parameters
     :return all_contacts: list of dictionaries / CDR
+    :return output_columns: list of output column names
     '''
     # prepare for output
     all_contacts    = []
-    output_columns  = ['vid', 'is_contact'].extend(request_parameters)
+    output_columns  = ['vid', 'is_contact']
+    output_columns.extend(request_parameters)
 
     # prepare for the pagination
     has_more = True
     vidOffset = 0
     count = 100  # max 100
+
     return all_contacts, output_columns
 
 
