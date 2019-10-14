@@ -48,7 +48,7 @@ def get_all_companies(request_parameters):
     # package the parameters into a substring
     param_substring = ''
     for item in request_parameters:
-        param_substring = '{}&property={}'.format(param_substring, item)
+        param_substring = '{}&properties={}'.format(param_substring, item)
 
     # prepare for the pagination
     has_more = True
