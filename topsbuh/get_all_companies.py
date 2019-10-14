@@ -6,15 +6,15 @@ import csv
 
 
 def main():
-    DOWLOADED_CONTACTS_FILE_PATH = '/media/alxfed/toca/aa-crm/enrich/contacts_downloaded.csv'
-    request_params = ['firstname', 'lastname', 'email', 'email_two',
-                  'jobtitle', 'company', 'phone', 'mobilephone',
-                  'city', 'zip', 'state', 'hs_lead_status']
-    all_contacts_cdr, all_columns = hubspot.contacts.get_all_contacts(request_params)
-    with open(DOWLOADED_CONTACTS_FILE_PATH, 'w') as f:
+    DOWNLOADED_COMPANIES_FILE_PATH = '/media/alxfed/toca/aa-crm/enrich/companies_downloaded.csv'
+    request_params = ['name', 'phone', 'phone_mobile', 'phone_voip',
+                      'phone_toll','phone_landline','phone_unidentified',
+                      'address','city','zip','state', 'category','website']
+    all_companies_cdr, all_columns = hubspot.companies.get_all_companies(request_params)
+    with open(DOWNLOADED_COMPANIES_FILE_PATH, 'w') as f:
         f_csv = csv.DictWriter(f, fieldnames=all_columns)
         f_csv.writeheader()
-        f_csv.writerows(all_contacts_cdr)
+        f_csv.writerows(all_companies_cdr)
     return
 
 

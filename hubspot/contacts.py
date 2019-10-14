@@ -26,8 +26,8 @@ def get_all_contacts(request_parameters):
     :return output_columns: list of output column names
     """
     def make_parameters_string(vidOffset, count):
-        parameters_string = 'hapikey=' + constants.api_key
-        parameters_string = '{}{}&vidOffset={}&count={}'.format(parameters_string,
+        authentication = 'hapikey=' + constants.api_key
+        parameters_string = '{}{}&vidOffset={}&count={}'.format(authentication,
                                                                 param_substring,
                                                                 vidOffset, count)
         return parameters_string
