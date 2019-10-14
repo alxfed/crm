@@ -11,7 +11,7 @@ def main():
     association_types = {'Contact to company': 1, 'Company to contact': 2,
                          'Deal to contact': 3, 'Contact to deal': 4,
                          }
-    associations, all_columns = hubspot.companies.get_all_companies(request_params)
+    associations, all_columns = hubspot.associations.get_associations_of_object(request_params)
     with open(ASSOCIATIONS_FILE_PATH, 'w') as f:
         f_csv = csv.DictWriter(f, fieldnames=all_columns)
         f_csv.writeheader()
