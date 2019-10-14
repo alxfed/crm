@@ -9,7 +9,7 @@ def main():
     request_params = ['firstname', 'lastname', 'email', 'email_two',
                   'jobtitle', 'company', 'phone', 'mobilephone',
                   'city', 'zip', 'state', 'hs_lead_status']
-    all_contacts_cdr = hubspot.contacts.get_all_contacts(request_params)
+    all_contacts_cdr, all_columns = hubspot.contacts.get_all_contacts(request_params)
     return
 
 
