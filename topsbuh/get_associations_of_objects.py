@@ -16,7 +16,7 @@ def main():
                          'Deal to engagement': 11, 'Engagement to deal': 12}
     # output
     output_rows = []
-    output_columns = ['companyId', 'associations']
+    output_columns = ['companyId', 'Contact to company', 'Company to contact']
 
     with open(OBJECTID_FILE_PATH) as f:
         f_csv = csv.DictReader(f, restkey='Rest', restval='')
@@ -33,6 +33,7 @@ def main():
             if assoc:
                 ass_two = " ".join(['%s' % n for n in assoc])
             output_row.update({'Company to contact': ass_two})
+            print('Now storing: ', output_row)
             output_rows.append(output_row)
 
     with open(ASSOCIATIONS_FILE_PATH, 'w') as f:
