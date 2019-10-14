@@ -14,7 +14,7 @@ downloaded_contacts_path = '/media/alxfed/toca/aa-crm/enrich/contacts_downloaded
 
 headers = {"Content-Type": "application/json"}
 
-def MakeParametersString(params_list, vidOffset, count):
+def make_parameters_string(params_list, vidOffset, count):
     parameters_string = 'hapikey='+API_KEY
     for item in params_list:
         parameters_string = '{}&property={}'.format(parameters_string, item)
@@ -39,7 +39,7 @@ vidOffset = 0
 count = 100           # max 100
 
 while has_more:
-    api_url = '{}?{}'.format(CONTACTS_URL, MakeParametersString(req_params, vidOffset, count))
+    api_url = '{}?{}'.format(CONTACTS_URL, make_parameters_string(req_params, vidOffset, count))
     response = requests.request("GET", url=api_url, headers=headers)
     if response.status_code == 200:
         res         = response.json()

@@ -13,7 +13,7 @@ COMPANY_CREATE_URL  = 'https://api.hubapi.com/companies/v2/companies'
 COMPANY_DELETE_URL  = 'https://api.hubapi.com/companies/v2/companies/'
 COMPANY_SEARCH_URL  = 'https://api.hubapi.com/companies/v2/domains/'
 
-
+CONTACTS_ALL_URL = 'https://api.hubapi.com/contacts/v1/lists/all/contacts/all'
 CONTACT_SEARCH_QUERY_URL = 'https://api.hubapi.com/contacts/v1/search/query?q='
 
 
