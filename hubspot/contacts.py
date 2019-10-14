@@ -26,7 +26,7 @@ def get_all_contacts(request_parameters):
     :return output_columns: list of output column names
     """
     def make_parameters_string(vidOffset, count):
-        parameters_string = 'hapikey' + constants.api_key
+        parameters_string = 'hapikey=' + constants.api_key
         parameters_string = '{}{}&vidOffset={}&count={}'.format(parameters_string,
                                                                 param_substring,
                                                                 vidOffset, count)
@@ -46,15 +46,16 @@ def get_all_contacts(request_parameters):
     vidOffset = 0
     count = 100  # max 100
 
+    # Now the main cycle
     while has_more:
         api_url = '{}?{}'.format(constants.CONTACTS_ALL_URL,
                                  make_parameters_string(vidOffset, count))
         response = requests.request("GET", url=api_url, headers=constants.header)
         if response.status_code == 200:
             res = response.json()
-            has_more = res['has-more']
-            vidOffset = res['vid-offset']
-            contacts = res['contacts']
+            has_more    = res['has-more']
+            vidOffset   = res['vid-offset']
+            contacts    = res['contacts']
             for contact in contacts:
                 row = {}
                 row.update({"vid": contact["vid"],
@@ -66,7 +67,7 @@ def get_all_contacts(request_parameters):
                         print('Adding a property to colunms list: ', co_property)
                     row.update({co_property: co_properties[co_property]['value']})
                 all_contacts.append(row)
-            print('vidOffset: ', vidOffset)
+            print('Now at vidOffset: ', vidOffset)
         else:
             print(response.status_code)
     return all_contacts, output_columns
