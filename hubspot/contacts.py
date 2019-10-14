@@ -25,11 +25,10 @@ def get_all_contacts(request_parameters):
     :return all_contacts: list of dictionaries / CDR
     :return output_columns: list of output column names
     '''
-    # prepare for output
+    # prepare for the (inevitable) output
     all_contacts    = []
     output_columns  = ['vid', 'is_contact']
     output_columns.extend(request_parameters)
-
     # prepare for the pagination
     has_more = True
     vidOffset = 0
