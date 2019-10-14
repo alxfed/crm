@@ -4,6 +4,7 @@
 import requests
 from . import constants
 
+
 def search_for_contacts(query_term):
     query = constants.CONTACT_SEARCH_QUERY_URL + query_term
     response = requests.get(url=query, params=constants.parameters)
