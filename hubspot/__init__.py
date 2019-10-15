@@ -1,4 +1,4 @@
-__all__ = ['constants', 'companies', 'contacts']
+__all__ = ['constants', 'companies', 'contacts', 'associations']
 
 from . import companies, constants, contacts, associations
 
