@@ -17,7 +17,7 @@ COMPANIES_ALL_URL   = 'https://api.hubapi.com/companies/v2/companies/paged'
 CONTACTS_ALL_URL = 'https://api.hubapi.com/contacts/v1/lists/all/contacts/all'
 CONTACT_SEARCH_QUERY_URL = 'https://api.hubapi.com/contacts/v1/search/query?q='
 
-ASSOCIATIONS_URL    = 'https://api.hubapi.com/crm-associations/v1/associations/'
+ASSOCIATIONS_URL    = 'https://api.hubapi.com/crm-associations/v1/associations'
 
 
 def main():
