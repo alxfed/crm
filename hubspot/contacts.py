@@ -73,6 +73,27 @@ def get_all_contacts(request_parameters):
     return all_contacts, output_columns
 
 
+def get_contact_properties(vid, req_properties):
+    """
+    get the profile of a contact
+    :param vid:
+    :return: profile
+    """
+    # package the parameters into a substring
+    properties = {}
+    param_substring = ''
+    for item in req_properties:
+        param_substring = '{}&property={}'.format(param_substring, item)
+    authentication = 'hapikey=' + constants.api_key
+    api_url = f'{constants.CONTACT_URL}/vid/{vid}/profile?{authentication}{param_substring}'
+    response = requests.request("GET", url=api_url, headers=constants.header)
+    if response.status_code == 200:
+        res = response.json()
+        properties= res['properties']
+    else:
+        print('Error: ', response.status_code)
+    return properties
+
 def main():
     print("\nYou've launched the module as __main__\n")
     return
